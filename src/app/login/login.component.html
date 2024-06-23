@@ -1,0 +1,21 @@
+  <div class="login-container">
+    <img class="film" src="assets/images/wallpaperflare.com_wallpaper.jpg" alt="header">
+    <div class="logo">RateFlix</div>
+    <div class="desc">
+      Discover, rate, and share your favorite movies with RateFlix! Our user-friendly app is designed for movie enthusiasts to explore new films, provide ratings, and see what others think. Whether you’re looking for the next blockbuster hit or a hidden gem, RateFlix offers personalized recommendations based on your tastes. Keep track of what you’ve watched, create custom lists, and connect with friends to compare reviews. With RateFlix, every movie night becomes an adventure!
+    </div>
+    <div class="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" class="form-control" [(ngModel)]="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="text" name="password" class="form-control" [(ngModel)]="password">
+      </div>
+      <div class="btn-container">
+          <div class="error">{{errMsg}}</div>
+          <button class="btn btn-success"(click)="login()" >Login</button>
+     </div>
+    </div>
+  </div>
