@@ -1,0 +1,24 @@
+.btn-dark {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .btn-dark:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+  }
+.filter-section {
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+.filter-section h5 {
+  margin-bottom: 1rem;
+}
+
+.filter-section label {
+  margin-left: 0.5rem;
+}

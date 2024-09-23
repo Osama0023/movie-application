@@ -1,0 +1,41 @@
+.product-card {
+    position: relative;
+    border: none;
+  }
+  
+  .product-card img {
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .product-card .price span {
+    margin-right: 5px;
+  }
+  
+  .product-card .btn {
+    width: 100%;
+  }
+  .product-card .button-heart{
+    width: 40px; /* Adjust the size as needed */
+    height: 40px; /* Make it a circle */
+    padding: 0; /* Remove default padding */
+    border-radius: 50%; /* Make the button round */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  .product-card .fa-heart {
+    color: #888;
+  }
+  
+  .alert-primary {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .alert-primary .alert-link {
+    color: white;
+    text-decoration: underline;
+  }
+  

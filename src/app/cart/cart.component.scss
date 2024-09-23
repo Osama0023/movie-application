@@ -1,0 +1,48 @@
+.main-image img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .thumbnail-images {
+    overflow-x: auto;
+  }
+  
+  .thumbnail-item img {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+  }
+  
+  .more-images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .product-rating span {
+    font-size: 18px;
+  }
+  
+  .color-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .size-option .btn {
+    width: 60px;
+    font-size: 14px;
+  }
+  
+  .free-delivery {
+    font-size: 14px;
+    color: #888;
+  }
+  

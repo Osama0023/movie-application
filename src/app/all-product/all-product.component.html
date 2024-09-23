@@ -1,0 +1,27 @@
+<app-filter-products></app-filter-products>
+<div class="d-flex flex-wrap justify-content-start px-4">
+  <div class="card product-card m-3" *ngFor="let product of products" style="width: 18rem;">
+    <div class="image position-relative">
+      <img src="assets/images/mobile-iphone.jpg" class="card-img-top">
+      <!-- Hover icons container -->
+      <div class="hover-icons">
+        <button class="btn btn-light"><i class="fa fa-heart"></i></button>
+        <button class="btn btn-light"><i class="fa fa-eye"></i></button>
+        <button class="btn btn-light"><i class="fa fa-shopping-cart"></i></button>
+      </div>
+    </div>
+    <div class="content p-2">
+      <div class="header">{{product.name}}</div>
+      <div class="meta">
+        <a>Friends</a>
+      </div>
+      <div class="description">
+        {{product.description}}
+      </div>
+    </div>
+    <div class="d-flex w-100 justify-content-between align-items-center p-2">
+      <button class="btn btn-success">Add To Cart</button>
+      <span>10000 L.E</span>
+    </div>
+  </div>
+</div>

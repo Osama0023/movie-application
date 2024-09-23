@@ -12,12 +12,14 @@ export class HeaderComponent {
   constructor(private router: Router, private auth: AuthService){
   }
 
-  goHome(){
-  this.router.navigate(['home']);
-  }
+  selectedLanguage: string = 'English'; // Default text
+  dropdownVisible: boolean = false;
 
-  logout(){
-    this.auth.logout();
+  selectLanguage(language: string) {
+    this.selectedLanguage = language;
   }
-
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
+  
 }

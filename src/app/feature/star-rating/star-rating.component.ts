@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class StarRatingComponent {
 
-  @Input() rating:any;
-  @Input() isReadOnly: boolean= false;
-  t: any;
+  // @Input() rating:any;
+  // @Input() isReadOnly: boolean= false;
+  // t: any;
 
 }

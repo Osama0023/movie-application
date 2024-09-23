@@ -1,0 +1,33 @@
+.map-section {
+    height: 50vh;
+    position: relative;
+    background-color: #f8f9fa; /* fallback background color */
+  }
+  
+  .branches-card {
+    width: 80%;
+    max-width: 300px;
+    border: 2px solid #007bff; /* Bootstrap primary color for border */
+    z-index: 2;
+  }
+  
+  .join-us-section {
+    background-color: #6f42c1; /* Bootstrap purple color */
+  }
+  
+  .join-us-section h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .join-us-section p {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+  
+  .join-us-section button {
+    padding: 10px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+  }
+  
