@@ -3,21 +3,20 @@ import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { Subject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
 import { User } from "./user.module";
-import { isPlatformBrowser } from '@angular/common'; // Import to check if we are running in the browser
+import { isPlatformBrowser } from '@angular/common';
 
 export interface AuthResponseData {
   token: string;
+  role:string
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new Subject<User>();
-
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object // Inject platform ID
   ) {
-    // Ensure autoLogin is called on service initialization
     this.autoLogin();
   }
 
@@ -65,12 +64,30 @@ export class AuthService {
     }
   }
 
+  //forget password 
+  forgetpassword(email: string){
+
+  }
+
+  // decodeToken(token: string): any {
+  //   try {
+  //     return jwt_decode(token);  // jwt_decode is now callable with the correct import
+  //   } catch (error) {
+  //     console.error('Error decoding token:', error);
+  //     return null;
+  //   }
+  // }
+
+  // getRoleFromToken(token: string): string {
+  //   const decodedToken = this.decodeToken(token);
+  //   return decodedToken ? decodedToken.role : null;
+  // }
+
   private handleAuthentication(token: string) {
     const user = new User(token);
     this.user.next(user);
 
     if (isPlatformBrowser(this.platformId)) {
-      // Store user data in localStorage
       localStorage.setItem('userData', JSON.stringify(user));
     }
   }

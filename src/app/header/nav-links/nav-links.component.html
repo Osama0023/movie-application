@@ -1,0 +1,27 @@
+<div class="top-bar text-center d-none d-md-block ">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center px-4 ">
+            <div class="d-flex align-items-center ">
+                <span class="px-2">01099446288</span>
+                <a href="https://www.facebook.com/embabistore" class=" ml-2 px-2"><i class="fa-brands fa-facebook fa-lg top-icon"></i></a>
+                <a href="https://www.instagram.com/muhamed_embabi/" class=" ml-2"><i class="fab fa-instagram fa-lg top-icon"></i></a>
+            </div>
+            <div class="d-flex align-items-center ">
+              <a routerLink="/location" routerLinkActive="active"
+              class="px-2 text-decoration-none" style="color: #dddddd;">
+                <i class="fa-solid fa-location-dot px-2 top-icon"></i> Our Branches
+              </a>
+                              <span class="mx-2">|</span>
+                <a href="#" routerLink="/contact"style="color: #dddddd;" class=" px-2 text-decoration-none" >Contact Us</a>
+                <span class="mx-2">|</span>
+                <div class="ui  dropdown labeled  button"  (click)="toggleDropdown()">
+                  <i class="fa-solid fa-globe px-2 top-icon-lang"></i> <span class="text-white">{{ selectedLanguage }}</span>
+                  <div class="menu" [class.show]="dropdownVisible">
+                    <div class="item" (click)="selectLanguage('Arabic')">Arabic</div>
+                    <div class="item" (click)="selectLanguage('English')">English</div>
+                  </div>
+                </div>
+                          </div>
+        </div>
+    </div>
+  </div>

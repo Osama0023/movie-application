@@ -1,0 +1,36 @@
+<div class="container-fluid p-0">
+  <!-- Map Section -->
+  <div class="map-section position-relative">
+    <google-map
+      height="400px"
+      width="100%"
+      [center]="center"
+      [zoom]="zoom"
+      [options]="{ mapTypeId: 'roadmap', scrollwheel: false }"
+    >
+      <!-- Loop through each location and place a marker -->
+      <map-marker
+        *ngFor="let location of locations"
+        [position]="{ lat: location.lat, lng: location.lng }"
+        [title]="location.title"
+      ></map-marker>
+    </google-map>
+
+    <!-- Branches Card (You can customize this for each location if needed) -->
+    <div class="branches-card position-absolute top-50 start-50 translate-middle bg-white shadow-lg p-4 rounded-3">
+      <div class="row text-center">
+        <div *ngFor="let location of locations" class="mb-3 mb-md-0">
+          <h5 class="text-primary">{{ location.title }}</h5>
+          <p class="text-muted">{{ location.address }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join Us Section -->
+  <div class="join-us-section text-center py-5 bg-primary text-white">
+    <h2>Visit Us</h2>
+    <p class="mb-4">WORK ALONGSIDE OUR TALENTED, FAST GROWING TEAM.</p>
+    <button class="btn btn-light btn-lg">View Openings</button>
+  </div>
+</div>

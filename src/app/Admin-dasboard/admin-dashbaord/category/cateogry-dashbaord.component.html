@@ -1,0 +1,68 @@
+<div class="container mt-4">
+  <div class="row">
+    <!-- Category Selection Card -->
+    <div class="col-md-6">
+      <div class="card card-flush py-4">
+        <div class="card-body">
+          <form>
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label>Category Selection</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="name" (selectionChange)="filterCategory($event)">
+                <mat-option *ngFor="let category of categoryList" [value]="category._id">
+                  {{ category.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <p class="mt-3"> Selected Category: <strong>{{selectedValue}}</strong> </p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Form Card -->
+    <div class="col-md-6">
+      <div class="card card-flush py-4">
+        <div class="card-body">
+          <form [formGroup]="categoryForm">
+            <div class="form-group">
+              <label for="text">Category Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Category Name"
+                formControlName="name"
+                id="name"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="row mt-4">
+    <div class="col-12 d-flex justify-content-end">
+      <button type="submit" class="btn btn-success me-3" (click)="msgSave()">
+        <i class="fa fa-save me-2"></i> Save
+      </button>
+
+      <button type="button" class="btn btn-info me-3" (click)="msgUpdate()">
+        <i class="fa fa-pencil-alt me-2"></i> Update
+      </button>
+
+      <button type="button" class="btn btn-secondary me-3" (click)="newData()">
+        <i class="fa fa-undo me-2"></i> Clear
+      </button>
+
+      <button type="button" class="btn btn-danger" (click)="mesgDelete()">
+        <i class="fa fa-trash me-2"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-product-dashboard></app-product-dashboard>
+<app-orders></app-orders>
+
+

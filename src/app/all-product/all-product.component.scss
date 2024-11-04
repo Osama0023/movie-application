@@ -1,37 +1,24 @@
-.product-card {
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .product-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .product-card .hover-icons {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .product-card:hover .hover-icons {
-    opacity: 1;
-  }
-  
-  .hover-icons .btn {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    padding: 8px;
-    border: 0.2px solid rgb(180, 180, 180);
-  }
-  
-  .hover-icons .btn i {
-    font-size: 16px;
-  }
-  
+.notification-box {
+  position: fixed;
+  top: 20px; /* Adjust this as necessary */
+  right: 60px; /* Adjust this as necessary to position next to cart icon */
+  background-color: #ff6666;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+
+/* When the notification is visible, smoothly fade in */
+.notification-box.ng-trigger {
+  opacity: 1;
+}
+
+.notification-box.ng-trigger.ng-leave {
+  opacity: 0;
+}

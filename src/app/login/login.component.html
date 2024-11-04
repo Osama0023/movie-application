@@ -38,6 +38,9 @@
             >{{isLoginMode ? 'Login' : 'SignUp'}}</button>
             <p class="login-link">Already have an account? <a  
                 type="button" (click)="onSwitchMode()"> {{isLoginMode ? 'SignUp' : 'Login'}}</a></p>
+
+                <p class="login-link"> <a  
+                    type="button" (click)="onSwitchMode()" *ngIf="isLoginMode">Forgot Password?</a></p>
     
         </form>
 

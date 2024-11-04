@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-auth',
@@ -12,7 +13,9 @@ import { Router } from '@angular/router';
 export class AuthComponent {
   isLoginMode = true;
   isLoading =false;
+  isAdmin : string;
   error: string  =null;
+  helper = new JwtHelperService();
 
   constructor(private authService: AuthService, private router : Router,   
   ){}
@@ -38,9 +41,28 @@ export class AuthComponent {
       authObs= this.authService.signUp(email, password,password_confirmation)
     }
     authObs.subscribe((resData : AuthResponseData )=>{
+        const deccodedToken = this.helper.decodeToken(resData.token);
+          this.isAdmin = deccodedToken.role
+          console.log(this.isAdmin);
+          if(this.isAdmin =='admin'){
+            this.router.navigate(['admin-dashboard'])
+          }else{
+            this.router.navigate(['home']);
+          }
       console.log(resData);
       this.isLoading=false;
-      this.router.navigate(['home'] )
+      // const token = resData.token;
+      // console.log('token',token)
+
+      // const role = this.authService.getRoleFromToken(token);
+      // console.log('role',role)
+      // Navigate based on the role
+      // if (role === 'admin') {
+      //   this.router.navigate(['admin-dashboard']);
+      // } else {
+      //   this.router.navigate(['home']);
+      // }
+    
     }, errorMessage =>{
       console.log(errorMessage);
       this.error = errorMessage

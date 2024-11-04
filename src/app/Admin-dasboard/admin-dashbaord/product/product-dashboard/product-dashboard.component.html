@@ -1,0 +1,143 @@
+<div class="container my-4">
+  <!-- Category Selection -->
+  <div class="card card-flush py-4">
+    <div class="row">
+      <div class="col-md-12">
+        <form>
+          <div class="form-group">
+            <mat-form-field class="w-100">
+              <mat-label>Category Selection</mat-label>
+              <mat-select [(ngModel)]="selectedValue" name="name" (selectionChange)="onCategorySelectionChange($event)">
+                <mat-option *ngFor="let category of categoryList" [value]="category._id">
+                  {{ category.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <p>Selected Category: {{ selectedValue }}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- AG Grid -->
+  <div class="card my-4">
+    <div class="card-body">
+      <ag-grid-angular
+        [gridOptions]="gridOptions"
+        class="ag-theme-balham h-auto">
+      </ag-grid-angular>
+    </div>
+  </div>
+
+  <!-- Product Form -->
+  <div class="card card-flush">
+    <div class="card-header">
+      <h5 class="card-title">Product Form</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="ProductForm">
+        <div class="row">
+          <!-- Product Name -->
+          <div class="form-group col-md-6">
+            <label for="name">Product Name</label>
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Product Name">
+          </div>
+
+          <!-- Product Description -->
+          <div class="form-group col-md-6">
+            <label for="description">Product Description</label>
+            <input type="text" class="form-control" formControlName="description" id="description" placeholder="Product Description">
+          </div>
+
+          <!-- Price -->
+          <div class="form-group col-md-6">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" formControlName="price" id="price" placeholder="Price">
+          </div>
+
+          <!-- Sale Discount Percentage -->
+          <div formGroupName="sale" class="form-group col-md-6">
+            <label for="sale-discountPercentage">Sale Discount Percentage</label>
+            <input type="text" class="form-control" formControlName="discountPercentage" id="sale-discountPercentage" placeholder="Discount Percentage">
+          </div>
+
+          <!-- Sale End Date -->
+          <div formGroupName="sale" class="form-group col-md-6">
+            <label for="saleEndDate">Sale End Date</label>
+            <input type="date" class="form-control" formControlName="saleEndDate" id="saleEndDate" placeholder="Sale End Date">
+          </div>
+
+          <!-- Category Group -->
+          <div formGroupName="category" class="form-group col-md-6">
+            <label for="categoryId">Category Id</label>
+            <input type="text" class="form-control" formControlName="categoryId" id="categoryId" placeholder="Category Id" disabled>
+          </div>
+
+          <div formGroupName="category" class="form-group col-md-6">
+            <label for="categoryName">Category Name</label>
+            <input type="text" class="form-control" formControlName="categoryName" id="categoryName" placeholder="Category Name" disabled>
+          </div>
+
+<!-- Color Selection -->
+<div class="form-group col-md-6">
+  <label>Color Selection</label>
+  <div formArrayName="colors" class="border p-3 rounded">
+    <div *ngFor="let color of colors.controls; let i = index" [formGroupName]="i" class="mb-2 d-flex align-items-center">
+      <div class="me-2">
+        <label for="colorName">Color:</label>
+        <input formControlName="colorName" class="form-control d-inline-block w-auto" id="colorName" placeholder="Color" />
+      </div>
+
+      <div class="me-2">
+        <label for="quantity">Quantity:</label>
+        <input formControlName="quantity" class="form-control d-inline-block w-auto" id="quantity" type="number" placeholder="Quantity" />
+      </div>
+
+      <button type="button" class="btn btn-danger btn-sm" (click)="removeColor(i)">
+        <i class="fa fa-trash"></i>
+      </button>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-sm" (click)="addColor()">
+      <i class="fa fa-plus"></i> Add Color
+    </button>
+  </div>
+</div>
+        
+
+          <!-- Thumbnails -->
+          <div class="form-group col-md-6">
+            <label for="thumbnails">Thumbnails</label>
+            <input type="text" class="form-control" formControlName="thumbnails" id="thumbnails" placeholder="Thumbnails">
+          </div>
+
+          <!-- Image -->
+          <div class="form-group col-md-6">
+            <label for="image">Product Image</label>
+            <img *ngIf="ProductForm.controls['image'].value" [src]="ProductForm.controls['image'].value" alt="Product Image" class="img-fluid" style="max-width: 200px; margin-top: 10px;" />
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="card-footer d-flex justify-content-end pt-0">
+      <button type="submit" class="btn btn-success me-3" (click)="msgSave()">
+        <i class="fa fa-save me-2"></i> Save
+      </button>
+
+      <button type="button" class="btn btn-info me-3" >
+        <i class="fa fa-pencil-alt me-2"></i> Update
+      </button>
+
+      <button type="button" class="btn btn-secondary me-3" (click)="newData()">
+        <i class="fa fa-undo me-2"></i> Clear
+      </button>
+
+      <button type="button" class="btn btn-danger" (click)="mesgDelete()">
+        <i class="fa fa-trash me-2"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+<div class="cart-wrapper">
+  <!-- Left Section: Cart Items -->
+  <div class="cart-items-section">
+    <p class="lead"><strong>Product</strong> in your bag</p>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through cart products -->
+        <tr class="cart-item" *ngFor="let item of cartProduct; let index = index">
+          <td class="product-details">
+            <img src="assets/images/mobile-iphone.jpg" alt="Product Image">
+            <div class="product-info">
+              <div class="category">{{item.item.category?.name}}</div>
+              <div class="product-name">{{item.item.name}}</div>
+              <div class="product-meta">
+                <span>Color: {{item.item.colors}}</span>
+              </div>
+            </div>
+          </td>
+          <td class="price">
+            <!-- Check if the item has a discount percentage -->
+            <ng-container *ngIf="item.item.sale?.discountPercentage; else noDiscount">
+              <!-- Display the discounted price -->
+              ${{ (item.item.price) - (item.item.price * (item.item.sale.discountPercentage / 100))  }}
+              <span class="old-price"> ${{ item.item.price }}</span>
+            </ng-container>
+            <!-- Display the regular price if no discount is present -->
+            <ng-template #noDiscount>
+              ${{ item.item.price }}
+            </ng-template>
+          </td>
+                    <td class="quantity">
+            <button class="quantity-btn" (click)="minsAmount(index)">-</button>
+            <span class="quantity-number">{{item.quantity}}</span>
+            <button class="quantity-btn" (click)="addAmount(index)">+</button>
+          </td>
+          <td class="total-price">${{((item.item.price) - (item.item.price * (item.item.sale.discountPercentage / 100))) * item.quantity}}</td>
+          
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Right Section: Checkout Summary -->
+  <div class="checkout-section">
+    <!-- Calculated Shipping -->
+    <div class="checkout-container">
+      <!-- <div class="shipping-section">
+        <h4>Calculated Shipping</h4>
+        <div class="form-group">
+          <select class="dropdown">
+            <option>Country</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="State / City" class="input-field">
+          <input type="text" placeholder="ZIP Code" class="input-field">
+        </div>
+        <button class="btn btn-update">Update</button>
+      </div> -->
+
+
+      <!-- Coupon Code -->
+      <div class="coupon-section">
+        <h4>Coupon Code</h4>
+        <p class="info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Design by Fluttertop</p>
+        <input type="text" placeholder="Coupon Code" class="input-field">
+        <button class="btn btn-apply">Apply</button>
+      </div>
+
+      <hr class="divider">
+
+      <!-- Cart Total -->
+      <div class="cart-total-section">
+        <h4>Cart Total</h4>
+        <div class="summary">
+          <div class="row">
+            <span>Cart Subtotal</span>
+            <span>{{total}} L.E</span>
+          </div>
+          <div class="row">
+            <span>Discount</span>
+            <span>0 L.E</span>
+          </div>
+          <div class="row total">
+            <span>Cart Total</span>
+            <span>{{total}} L.E</span>
+          </div>
+        </div>
+        <button class="btn btn-apply" routerLink="/checkout">Checkout</button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

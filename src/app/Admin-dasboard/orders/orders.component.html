@@ -1,0 +1,26 @@
+<div class="order-card" *ngFor="let order of orders">
+    <h3>Order for {{ order.name }}</h3>
+    <p>Email: {{ order.email }}</p>
+    <p>Address: {{ order.address }}</p>
+    <p>Total Price: ${{ order.totalPrice }}</p>
+  
+    <div class="items">
+      <h4>Items:</h4>
+      <div *ngFor="let item of order.items" class="item">
+        <p>Product ID: {{ item.product }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+      </div>
+    </div>
+  
+    <div class="order-status">
+      <label for="status-{{ order.name }}">Order Status:</label>
+      <select id="status-{{ order.name }}" [(ngModel)]="order.status">
+        <option value="ordered">Ordered</option>
+        <option value="prepared">Prepared</option>
+        <option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option>
+      </select>
+      <button (click)="updateOrderStatus(order)">Update Status</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,106 @@
+<div class="checkout-container">
+    
+
+    <form class="checkout-form" [formGroup]="checkoutForm">
+      <h3>Contact</h3>
+      <div class="form-group">
+        <label for="email">Email or mobile phone number</label>
+        <input type="text" id="email" name="email" placeholder="number" formControlName="email" required> 
+      </div>
+
+      <h3>Delivery</h3>
+      <div class="form-group">
+        <label for="country">Country/Region</label>
+        <input type="text" id="country" name="country" value="country" formControlName="country" readonly> 
+      </div>
+      <div class="form-group">
+        <label for="first-name">First name</label>
+        <input type="text" id="first-name" name="first-name" placeholder="name" formControlName="firstName">
+      </div>
+      <div class="form-group">
+        <label for="last-name">Last name</label>
+        <input type="text" id="last-name" name="last-name" placeholder="last name" formControlName="lastName">
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" placeholder="Address" formControlName="address">
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" placeholder="City" formControlName="city">
+      </div>
+      <div class="form-group">
+        <label for="phone">Secondary Phone number</label>
+        <input type="text" id="phone" name="phone" placeholder="number" formControlName="secNumber">
+      </div>
+
+    </form>
+
+    <div class="billing-address">
+        <h3>Billing address</h3>
+        <div class="billing-options">
+          <label class="billing-option">
+            <input type="radio" name="billing-address" value="same" checked>
+            <span>Same as shipping address</span>
+          </label>
+          <label class="billing-option">
+            <input type="radio" name="billing-address" value="different">
+            <span>Use a different billing address</span>
+          </label>
+        </div>
+      </div>
+      <div class="billing-address">
+        <h3>Payment Method</h3>
+        <div class="billing-options">
+          <label class="billing-option">
+            <input type="radio" name="billing-address" value="same" checked>
+            <span>Cash</span>
+          </label>
+          <label class="billing-option">
+            <input type="radio" name="billing-address" value="different">
+            <span>Visa</span>
+          </label>
+          <label class="billing-option">
+            <input type="radio" name="billing-address" value="different">
+            <span>Vodafone Cash / Fawry</span>
+          </label>
+
+        </div>
+      </div>
+
+      
+      <!-- <div class="billing-section">
+        <h3>Billing address</h3>
+        <div class="billing-address-option">
+          <label>
+            <input type="radio" name="billing-address" value="same" checked> Same as shipping address
+          </label>
+          <label>
+            <input type="radio" name="billing-address" value="different"> Use a different billing address
+          </label>
+        </div>
+      </div> -->
+  
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <div class="item">
+          <span>Items 
+            
+          </span> <span>{{items}}</span>
+        </div>
+        <div class="shipping">
+          <span>Shipping</span> <span>0</span>
+        </div>
+        <div class="total">
+          <span>Total</span> <span>{{total}}</span>
+        </div>
+        <div class="savings">
+          <span>Total Savings</span> <span class="old-price">{{savings}}</span>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn" (click)="Purchase()">Complete Order</button>
+
+  </div>
+
+
+    

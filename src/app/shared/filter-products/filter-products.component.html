@@ -1,0 +1,127 @@
+<!-- <div class="d-flex align-items-center justify-content-between px-4">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-dark d-flex align-items-center" (click)="toggleFilter()">
+      <i class="fa-solid fa-filter"></i>
+      <span class="ms-2">FILTER</span>
+    </button>
+    <span class="ms-3">There are 83 results in total</span>
+  </div>
+
+  <div class="d-flex align-items-center">
+    <div>
+      <span>Sort by:</span>
+      <select class="form-select d-inline-block w-auto ms-2">
+        <option>Best Selling</option>
+        <option>A-Z</option>
+        <option>Z-A</option>
+        <option>Price, Low To High</option>
+        <option>Price, High To Low</option>
+        <option>Date, New To Old</option>
+        <option>Date, Old To New</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="filterVisible" class="filter-section p-4 mt-3 border">
+  <div class="row">
+    <div class="col-md-3">
+      <h5>Availability</h5>
+      <div>
+        <input type="checkbox" id="inStock" />
+        <label for="inStock">In stock</label>
+      </div>
+      <div>
+        <input type="checkbox" id="outOfStock" />
+        <label for="outOfStock">Out of stock</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <h5>Price</h5>
+      <input type="range" class="form-range" min="0" max="200000" step="500" />
+      <div>Price: LE 0.00 - LE 198,999.00</div>
+    </div>
+    <div class="col-md-3">
+      <h5>More Filters</h5>
+      <div>
+        <input type="checkbox" id="filter1" />
+        <label for="filter1">11"</label>
+      </div>
+      <div>
+        <input type="checkbox" id="filter2" />
+        <label for="filter2">1000 Discount</label>
+      </div>
+      <div>
+        <input type="checkbox" id="filter3" />
+        <label for="filter3">5000 mAh</label>
+      </div>
+      <div>
+        <input type="checkbox" id="filter4" />
+        <label for="filter4">A53</label>
+      </div>
+      <div>
+        <input type="checkbox" id="filter5" />
+        <label for="filter5">A55</label>
+      </div>
+      <div>
+        <input type="checkbox" id="filter6" />
+        <label for="filter6">Android 12.</label>
+      </div>
+      <div>
+        <input type="checkbox" id="filter7" />
+        <label for="filter7">Android 13</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <h5>Brand</h5>
+      <div>
+        <input type="checkbox" id="brand1" />
+        <label for="brand1">Apple</label>
+      </div>
+      <div>
+        <input type="checkbox" id="brand2" />
+        <label for="brand2">Google</label>
+      </div>
+      <div>
+        <input type="checkbox" id="brand3" />
+        <label for="brand3">Honor</label>
+      </div>
+      <div>
+        <input type="checkbox" id="brand4" />
+        <label for="brand4">Huawei</label>
+      </div>
+      <div>
+        <input type="checkbox" id="brand5" />
+        <label for="brand5">Infinix</label>
+      </div>
+      <div>
+        <input type="checkbox" id="brand6" />
+        <label for="brand6">Nothing</label>
+      </div>
+      <div>
+        <input type="checkbox" id="brand7" />
+        <label for="brand7">OnePlus</label>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end mt-3">
+    <button class="btn btn-dark" (click)="toggleFilter()">Apply</button>
+  </div>
+</div> -->
+<div class="d-flex align-items-center justify-content-between px-4">
+  <!-- View Options and Sort -->
+  <div class="d-flex align-items-center">
+    <div>
+      <span>Sort by:</span>
+      <select class="form-select d-inline-block w-auto ms-2" (change)="sortProducts($event.target.value)">
+        <option value="Best Selling">Best Selling</option>
+        <option value="A-Z">A-Z</option>
+        <option value="Z-A">Z-A</option>
+        <option value="Price, Low To High">Price, Low To High</option>
+        <option value="Price, High To Low">Price, High To Low</option>
+        <option value="Date, New To Old">Date, New To Old</option>
+        <option value="Date, Old To New">Date, Old To New</option>
+      </select>
+    </div>
+  </div>
+</div>
