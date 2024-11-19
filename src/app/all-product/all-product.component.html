@@ -9,6 +9,14 @@
     <li class="breadcrumb-item active" aria-current="page">Data</li>
   </ol>
 </nav>
+                <mat-form-field class="w-100 " >
+                  <mat-label>All Department</mat-label>
+                  <mat-select [(ngModel)]="selectedValue" name="name" (selectionChange)="onCategorySelectionChange($event)">
+                    <mat-option *ngFor="let category of categories" [value]="category._id">
+                      {{ category.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> 
 
 <app-filter-products (sortOptionChanged)="applySorting($event)"></app-filter-products>
 
@@ -19,7 +27,7 @@
     <div *ngIf="productsByCategory[selectedCategory]?.length; else noProducts">
       <div class="row">
         <div class="col-md-3" *ngFor="let product of productsByCategory[selectedCategory]">
-          <app-product [data]="product" (item)="addToCart($event)"></app-product>
+          <app-product [data]="product" (productSelected)="navigateToProductDetails($event)"></app-product>
         </div>
       </div>
     </div>
@@ -34,7 +42,7 @@
       </div>
       <div class="row" *ngIf="productsByCategory[category.name]?.length">
         <div class="col-md-3" *ngFor="let product of productsByCategory[category.name]">
-          <app-product [data]="product" (item)="addToCart($event)"></app-product>
+          <app-product [data]="product" (item)="addToCart($event)" (productSelected)="navigateToProductDetails($event)"></app-product>
         </div>
       </div>
     </div>

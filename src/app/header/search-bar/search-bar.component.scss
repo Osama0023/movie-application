@@ -1,48 +1,94 @@
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/* Navbar container */
+.navbar {
+    padding: 0rem 2rem;
   
-        .logo-container {
-          flex: 1;
-          display: flex;
-          justify-content: flex-start; /* Align logo to the left */
-          padding: 0 15px;
-      }
-      
-      .icons-container {
-          flex: 1;
-          display: flex;
-          justify-content: flex-end; /* Align icons to the right */
-          padding: 0 15px;
-          font-size: 1.1rem; /* Increase the size of the icon */
-
-      }
-            
-      .search-bar-container {
-        flex: 2;
-          display: flex;
-          justify-content: center; /* Align icons to the right */
-          align-self: center;
-      }
-      
-      .search-bar {
-          border-radius: 50px;
-          padding-right: 2.5rem; /* Make space for the icon */
-          background-color: #e9e9e9;
-          font-family: 'Inter';
-          font-weight: 400;
-          font-size: medium;
-          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* Inner shadow */
-      }
-      
-      .search-icon {
-          position: absolute;
-          right: 15px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 1.25rem;
-          color: #6c757d;
-          pointer-events: none;
-      }
-      
-      
+    .container-fluid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    /* Logo styling on the left */
+    app-logo {
+      flex: 0;
+    }
+  
+    /* Remove list styling for navigation items */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+  
+    /* Middle navigation links */
+    .middle-nav {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+  
+      .nav-item {
+        font-size: 1.4rem;
+        margin: 0 20px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-family: 'Roboto', sans-serif;
         
+        .nav-link {
+          color: #333;
+          text-decoration: none;
+          transition: color 0.3s ease;
+  
+          &:hover {
+            color: #007bff;
+          }
+        }
+      }
+      
+      /* HOT badge for Deals */
+      .badge-hot {
+        background-color: red;
+        color: white;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+    }
+  
+    /* Right side icons */
+    .icons-container {
+      display: flex;
+      align-items: center;
+  
+      .nav-item {
+        margin-left: 25px; /* Adds gap between each icon */
+        
+        .icon-link {
+          color: #333;
+          position: relative;
+  
+          i {
+            font-size: 1.4rem;
+          }
+  
+          /* Badge for cart and wishlist count */
+          .badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: #dc3545;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.4rem;
+            border-radius: 50%;
+            color: white;
+          }
+  
+          &:hover {
+            color: #007bff;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+  

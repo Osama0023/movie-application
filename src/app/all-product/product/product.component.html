@@ -1,9 +1,9 @@
-      <div class="product-card">
+      <div class="product-card"  (click)="navigateToDetails()">
         <div class="discount-badge" *ngIf="data.sale?.discountPercentage">{{ data.sale?.discountPercentage }}%</div>
 
         <!-- Image with icons -->
-        <div class="image-container position-relative">
-          <img src="assets/images/mobile-iphone.jpg" alt="Product 4">
+        <div class="image-container position-relative" >
+          <img src="assets/images/mobile-iphone.jpg" alt="Product 4" >
           <!-- Cart and Wishlist icons inside the image -->
           <i class="icon-cart fa-regular fa-heart" (click)="toggleIcon($event, 'wishlist')"></i>
           <div class="color-options" *ngIf="data.colors">

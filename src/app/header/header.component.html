@@ -1,17 +1,11 @@
 <!-- Top Bar -->
-<app-nav-links></app-nav-links>
+  <app-nav-links></app-nav-links>
 
 <!-- Main Navbar -->
-
   <app-search-bar></app-search-bar>
 
 
 <!-- Secondary Navbar -->
-<nav class="navbar navbar-expand-lg  secondary-navbar">
-  <div class="container-fluid px-4 ">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSecondary" aria-controls="navbarSecondary" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarSecondary">
         <ul class="navbar-nav w-100 px-2 d-flex align-items-center justify-content-between">
             <!-- Left side: Categories -->
@@ -25,50 +19,13 @@
                 >
                   Categories
                 </a> -->
-                <mat-form-field class="w-100 " >
-                  <mat-label>All Department</mat-label>
-                  <mat-select [(ngModel)]="selectedValue" name="name" (selectionChange)="onCategorySelectionChange($event)">
-                    <mat-option *ngFor="let category of categoryList" [value]="category._id">
-                      {{ category.name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
                   </li>
                   
             <!-- Center: Links -->
-            <div class="d-flex justify-content-center flex-grow-1">
-                <!-- <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#">Home</a>
-                </li> -->
-                <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#" routerLink="/home">Home</a>
-                </li>
-                                <!-- <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#" routerLink="/new-arrival">New Arrivals <span class="badge-new">NEW</span></a>
-                </li> -->
-
-                <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#" routerLink="/deals">Deals <span class="badge-hot">HOT</span></a>
-                </li>
-                <!-- <li class="nav-item font-weight-bold">
-                  <a class="nav-link" href="#" routerLink="/sale">Sale</a>
-              </li>
-
-                <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#" routerLink="/most-popular">Most Popular</a>
-                </li> -->
-                <!-- <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#" routerLink="/location">Less than 100EGP</a>
-                </li> -->
-                <li class="nav-item font-weight-bold">
-                    <a class="nav-link" href="#" routerLink="/contact">Contact Us</a>
-                </li>
-            </div>
+           
             
             <!-- Right side: Empty div for alignment -->
             <div class="empty-div"></div>
         </ul>
     </div>
-      </div>
-</nav>
 

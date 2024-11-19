@@ -33,7 +33,7 @@ export class SharedService {
   }
 
   // Sync cart count with items in localStorage
-  private updateCartCountFromLocalStorage() {
+   updateCartCountFromLocalStorage() {
     if (this.isLocalStorageAvailable()) {
       const cartItems: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
       this.cartCountSource.next(cartItems.length);

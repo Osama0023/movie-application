@@ -4,7 +4,7 @@ import { Category, Product } from './all-product.module';
 import { SharedService } from '../shared/shared.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CartItem } from '../header/search-bar/cart/cart.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 
 @Component({
@@ -29,12 +29,15 @@ export class AllProductComponent implements OnInit {
   showNotification: boolean = false;
   categories: Category[] = [];
   selectedCategory: string | null = null;
+  selectedValue: string ='';
 
   constructor(
     private productService: ProductService,
     private sharedService: SharedService,
     private route: ActivatedRoute,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +55,24 @@ export class AllProductComponent implements OnInit {
         }
       });
     });
+  }
+
+  // navigateToProductDetails(product: Product) {
+  //   // Navigate to Prod1uctDetailsComponent and pass product data as state
+  //   console.log('ddddddd',product)
+  //   this.router.navigate(['/product-details'], { state: { product } });
+  // }
+
+  onCategorySelectionChange(event: any) {
+    this.selectedValue = event.value;
+    // Find the selected category by ID to get the name
+    const selectedCategory = this.categories.find(category => category._id === this.selectedValue);
+    const categoryName = selectedCategory ? selectedCategory.name : '';
+  
+    // Use the router to navigate to the new URL with the category name
+    if (categoryName) {
+      this.router.navigate(['/home', categoryName]);
+    }
   }
 
   loadProductsByCategoryName(categoryName: string) {

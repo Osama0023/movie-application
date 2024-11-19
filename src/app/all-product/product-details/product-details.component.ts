@@ -1,27 +1,27 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { SharedService } from '../../shared/shared.service';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../all-product.module';
 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.scss'
+  styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent {
-  product!: Product;
-  productName!: string;
+export class ProductDetailsComponent implements OnInit {
+  product: Product | null = null;
 
-  constructor(
-    private route: ActivatedRoute,
-    private sharedService: SharedService
-  ) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.productName = params.get('productName') || '';
-      // Fetch the product details by productName, you can replace this with your actual fetching logic
-    });
+    // Access product data from navigation state
+    const navigation = this.router.getCurrentNavigation();
+    this.product = navigation?.extras.state?.product || null;
+    console.log(this.product)
+    if (!this.product) {
+      // Redirect or handle case where product data isn't available
+      console.warn('Product data not available');
+    }
   }
 
+  
 }

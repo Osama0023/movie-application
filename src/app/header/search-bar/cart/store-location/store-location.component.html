@@ -1,0 +1,49 @@
+<div class="store-location-container">
+  <div class="store-info">
+    <h2>Visit Our Store</h2>
+    <div class="info-item">
+      <i class="fas fa-store"></i>
+      <span>{{storeInfo.name}}</span>
+    </div>
+    <div class="info-item">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>{{storeInfo.address}}</span>
+    </div>
+    <div class="info-item">
+      <i class="fas fa-phone"></i>
+      <span>{{storeInfo.phone}}</span>
+    </div>
+    <div class="info-item">
+      <i class="fas fa-clock"></i>
+      <span>{{storeInfo.hours}}</span>
+    </div>
+    <div class="info-item">
+      <i class="fas fa-envelope"></i>
+      <span>{{storeInfo.email}}</span>
+    </div>
+  </div>
+
+  <div class="map-container">
+    <div *ngIf="isLoading" class="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    
+    <div *ngIf="mapError" class="map-error">
+      <p>Unable to load the map. Please try again later.</p>
+    </div>
+
+    <google-map *ngIf="!isLoading && !mapError"
+      height="400px"
+      width="100%"
+      [center]="center"
+      [zoom]="zoom"
+      [options]="mapOptions">
+      <map-marker
+        [position]="center"
+        [options]="markerOptions">
+      </map-marker>
+    </google-map>
+  </div>
+</div> 

@@ -87,24 +87,7 @@
         .item:hover {
           background-color: #ddd;
         }
-        .secondary-navbar {
-          position: relative;
-          background-color: #ffffff;
-          color: #f5e6c5;
-      }
-      
-      .secondary-navbar:after {
-          content: '';
-          position: absolute;
-          top: 0; /* Adjust as necessary if you want the border lower */
-          left: 3.5%; /* Centers the border by offsetting 10% from the left */
-          width: 93%; /* The border spans 80% of the container's width */
-          height: 1px; /* Border height */
-          background-color: #ccc; /* Border color */
-      }
-      .empty-div {
-        width: 80px; /* Adjust this width to match the width of the "Categories" section */
-    }
+     
     
     .navbar-nav {
         padding: 0 15px; /* Padding on both sides */
@@ -117,4 +100,3 @@
 
     }
     
-       

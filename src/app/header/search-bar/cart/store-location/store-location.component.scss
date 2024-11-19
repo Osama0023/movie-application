@@ -1,0 +1,74 @@
+.store-location-container {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  min-height: 500px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.store-info {
+  flex: 1;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  h2 {
+    color: #333;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+    i {
+      width: 24px;
+      margin-right: 1rem;
+      color: #007bff;
+    }
+
+    span {
+      color: #555;
+    }
+  }
+}
+
+.map-container {
+  flex: 2;
+  min-height: 400px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  google-map {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.loading, .map-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.map-error {
+  color: #dc3545;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading {
+  background: rgba(255, 255, 255, 0.9);
+} 

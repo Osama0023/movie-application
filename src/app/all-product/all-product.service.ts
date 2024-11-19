@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Product } from "./all-product.module";
+import { Observable } from "rxjs";
 
 // export interface AuthResponseData {
 //     idToken	:string
@@ -40,6 +41,12 @@ export class ProductService {
          return this.http.delete(`http://localhost:3000/api/products/${productID}/${categoryID}`
          );
      }
+     getProductById(id: string): Observable<Product> {
+        return this.http.get<Product>(`http://yourapi.com/products/${id}`);
+      }
+
+      
+            
 
 }
 

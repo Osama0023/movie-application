@@ -16,26 +16,26 @@ import { DealsComponent } from "./header/navigation/deals/deals.component";
 import { NewArrivalComponent } from "./header/navigation/new-arrival/new-arrival.component";
 import { CheckoutComponent } from "./header/search-bar/cart/checkout/checkout.component";
 import { CompleteOrderComponent } from "./header/search-bar/cart/complete-order/complete-order.component";
+import { StoreLocationComponent } from "./header/search-bar/cart/store-location/store-location.component";
 
 const route : Routes = [
   {path: '', redirectTo:'home', pathMatch:'full'},
   {path: 'header', component: HeaderComponent},
   { path: 'home/:category', component: HomeComponent },
   {path: 'home', component: HomeComponent},
-  { path: 'home/:productName', component: ProductDetailsComponent }, // Route for product details
   {path: 'login', component: AuthComponent},
   {path: 'cart', component: CartComponent},
   {path: 'wishlist' , component: WishingListComponent},
   {path: 'contact', component: ContactComponent},
-  {path: 'location', component: LocationsComponent},
+  {path: 'location', component: StoreLocationComponent},
   {path: 'new-arrival' , component: NewArrivalComponent},
   {path: 'deals', component: DealsComponent},
   {path: 'sale', component: DiscountComponent},
   {path: 'most-popular', component: MostPopularComponent},
-  {path:'admin-dashboard' , component: CatogoryDashboardComponent},
+  {path: 'admin-dashboard' , component: CatogoryDashboardComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'complete-order', component: CompleteOrderComponent},
-
+  // { path: 'product-details', component: ProductDetailsComponent }, // Route to product details page
   {path:'**', component: AuthComponent},
 
 ];

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../../shared/shared.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,6 +11,7 @@ export class CartComponent implements OnInit{
   total:any =0;
   success:boolean = false
 
+  constructor(private sharedService: SharedService){}
   ngOnInit(): void {
     this.getCartProducts()
   }
@@ -49,7 +51,9 @@ minsAmount(index: number) {
     // Otherwise, decrease the quantity
     this.cartProduct[index].quantity--;
     this.getCartTotal();  
-    localStorage.setItem("cart", JSON.stringify(this.cartProduct));    
+    localStorage.setItem("cart", JSON.stringify(this.cartProduct));
+    // Update the cart count in SharedService
+    this.sharedService.updateCartCountFromLocalStorage();
   }
 }
 addAmount(index: number){
@@ -64,13 +68,16 @@ detectChange(){
 deleteProduct(index: number){
   this.cartProduct.splice(index , 1);
   this.getCartTotal();  
-  localStorage.setItem("cart", JSON.stringify(this.cartProduct))  
+  localStorage.setItem("cart", JSON.stringify(this.cartProduct));
+  // Update the cart count in SharedService
+  this.sharedService.updateCartCountFromLocalStorage();
 }
 clearCart(){
   this.cartProduct = [];
   this.getCartTotal(); 
-  localStorage.setItem("cart", JSON.stringify(this.cartProduct))  
-  
+  localStorage.setItem("cart", JSON.stringify(this.cartProduct));
+  // Update the cart count in SharedService
+  this.sharedService.updateCartCountFromLocalStorage();
 }
 addCart(){
   let products = this.cartProduct.map(item => {

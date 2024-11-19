@@ -1,8 +1,6 @@
-<div class="product-details">
-    <h1>{{ product.name }}</h1>
-    <img  alt="{{ product.name }}" />
-    <p>{{ product.description }}</p>
-    <p>Price: {{ product.price | currency }} LE</p>
-    <button >Add to Cart</button>
-  </div>
-  
+<div *ngIf="product">
+  <h1>{{ product.name }}</h1>
+  <p>{{ product.description }}</p>
+  <p>Price: {{ product.price }} LE</p>
+  <!-- Add other details as needed -->
+</div>

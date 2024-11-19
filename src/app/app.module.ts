@@ -56,6 +56,7 @@ import { LogoComponent } from './header/search-bar/logo/logo.component';
 import { CompleteOrderComponent } from './header/search-bar/cart/complete-order/complete-order.component';
 import { OrdersComponent } from './Admin-dasboard/orders/orders.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { StoreLocationComponent } from './header/search-bar/cart/store-location/store-location.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     LogoComponent,
     CompleteOrderComponent,
     OrdersComponent,
-    
+    StoreLocationComponent
   ],
   imports: [
     BrowserModule,

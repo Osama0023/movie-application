@@ -24,6 +24,7 @@ import { Router } from '@angular/router';
     @Input() data!: Product;
     @Output() item = new EventEmitter();
     quantity: number = 1;
+    @Output() productSelected = new EventEmitter<Product>();
 
     constructor(
       private sharedService: SharedService,
@@ -46,13 +47,23 @@ import { Router } from '@angular/router';
           this.sharedService.addToWishlist(this.data);
         }
       }
+      if (type === 'cart') {
+        // If the item is already in wishlist, remove it
+        if (this.sharedService.isItemInCart(this.data._id)) {
+          element.classList.add('clicked');
+        }  
+      }
+
     }
-      
+    navigateToDetails() {
+      this.productSelected.emit(this.data);
+    }
+  
     add() {
       this.item.emit({ item: this.data, quantity: this.quantity });
           // Navigate to product details page using the product name
-    const productName = this.data.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and make it lowercase
-    this.router.navigate([`/home/${productName}`]); // Navigate to the product details page
+    // const productName = this.data.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and make it lowercase
+    // this.router.navigate([`/home/${productName}`]); // Navigate to the product details page
 
     }
   }
