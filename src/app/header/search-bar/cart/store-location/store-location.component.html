@@ -1,49 +1,92 @@
-<div class="store-location-container">
-  <div class="store-info">
-    <h2>Visit Our Store</h2>
-    <div class="info-item">
-      <i class="fas fa-store"></i>
-      <span>{{storeInfo.name}}</span>
-    </div>
-    <div class="info-item">
-      <i class="fas fa-map-marker-alt"></i>
-      <span>{{storeInfo.address}}</span>
-    </div>
-    <div class="info-item">
-      <i class="fas fa-phone"></i>
-      <span>{{storeInfo.phone}}</span>
-    </div>
-    <div class="info-item">
-      <i class="fas fa-clock"></i>
-      <span>{{storeInfo.hours}}</span>
-    </div>
-    <div class="info-item">
-      <i class="fas fa-envelope"></i>
-      <span>{{storeInfo.email}}</span>
-    </div>
+<div class="store-location-page">
+  <div class="breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/home">Home</a></li>
+        <li class="breadcrumb-item active">Store Locations</li>
+      </ol>
+    </nav>
   </div>
 
-  <div class="map-container">
-    <div *ngIf="isLoading" class="loading">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+  <div class="store-location-container">
+    <div class="store-info-section">
+      <div class="store-info-card">
+        <h2>Visit Our Stores</h2>
+        <div class="store-main-info">
+          <div class="info-item">
+            <i class="fas fa-store"></i>
+            <span>{{storeInfo.name}}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{storeInfo.address}}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-phone"></i>
+            <a [href]="'tel:' + storeInfo.phone">{{storeInfo.phone}}</a>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-clock"></i>
+            <span>{{storeInfo.hours}}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <a [href]="'mailto:' + storeInfo.email">{{storeInfo.email}}</a>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a [href]="storeInfo.socialLinks.facebook" target="_blank" class="social-icon">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a [href]="storeInfo.socialLinks.instagram" target="_blank" class="social-icon">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="branches-section">
+        <h3>Our Branches</h3>
+        <div class="branches-grid">
+          <div class="branch-card" *ngFor="let branch of branches">
+            <h4>{{branch.name}}</h4>
+            <div class="branch-info">
+              <p><i class="fas fa-map-marker-alt"></i> {{branch.address}}</p>
+              <p><i class="fas fa-phone"></i> {{branch.phone}}</p>
+              <p><i class="fas fa-clock"></i> {{branch.hours}}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    
-    <div *ngIf="mapError" class="map-error">
-      <p>Unable to load the map. Please try again later.</p>
-    </div>
 
-    <google-map *ngIf="!isLoading && !mapError"
-      height="400px"
-      width="100%"
-      [center]="center"
-      [zoom]="zoom"
-      [options]="mapOptions">
-      <map-marker
-        [position]="center"
-        [options]="markerOptions">
-      </map-marker>
-    </google-map>
+    <div class="map-section">
+      <div class="map-container">
+        <div *ngIf="isLoading" class="loading">
+          <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+        </div>
+        
+        <div *ngIf="mapError" class="map-error">
+          <i class="fas fa-exclamation-triangle"></i>
+          <p>Unable to load the map. Please try again later.</p>
+        </div>
+
+        <google-map *ngIf="!isLoading && !mapError"
+          height="600px"
+          width="100%"
+          [center]="center"
+          [zoom]="zoom"
+          [options]="mapOptions">
+          <map-marker
+            [position]="center"
+            [options]="markerOptions">
+          </map-marker>
+        </google-map>
+      </div>
+    </div>
   </div>
 </div> 

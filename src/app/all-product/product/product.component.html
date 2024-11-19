@@ -1,26 +1,33 @@
-      <div class="product-card"  (click)="navigateToDetails()">
-        <div class="discount-badge" *ngIf="data.sale?.discountPercentage">{{ data.sale?.discountPercentage }}%</div>
+      <div class="product-card" (click)="navigateToDetails()">
+        <div class="discount-badge" *ngIf="data.sale?.discountPercentage">
+          -{{ data.sale?.discountPercentage }}%
+        </div>
 
-        <!-- Image with icons -->
-        <div class="image-container position-relative" >
-          <img src="assets/images/mobile-iphone.jpg" alt="Product 4" >
-          <!-- Cart and Wishlist icons inside the image -->
-          <i class="icon-cart fa-regular fa-heart" (click)="toggleIcon($event, 'wishlist')"></i>
-          <div class="color-options" *ngIf="data.colors">
-            <span *ngFor="let color of data.colors" [ngStyle]="{'background-color': color}"></span>
+        <div class="image-container">
+          <img src="assets/images/mobile-iphone.jpg" [alt]="data.name">
+          
+          <div class="action-icons">
+            <i class="icon-cart fa-regular fa-heart" (click)="toggleIcon($event, 'wishlist')"></i>
+            <i class="icon-wishlist fa-solid fa-cart-shopping" (click)="toggleIcon($event, 'cart'); add()"></i>
           </div>
-          <i class="icon-wishlist fa-solid fa-cart-shopping" (click)="toggleIcon($event, 'cart')"
-          (click)="add()"
-         ></i>
+
+          <div class="color-options" *ngIf="data.colors && data.colors.length > 0">
+            <div class="color-item" *ngFor="let color of data.colors">
+              <span class="color-dot" [style.background-color]="color.colorName">
+                <span class="color-quantity">{{ color.quantity }}</span>
+              </span>
+            </div>
+          </div>
         </div>
         
-        <!-- Product Info -->
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="product-info">
           <div class="product-brand">{{ data.name }}</div>
-        </div>
-        <div class="product-name">{{ data.description }}</div>
-        <div class="product-price">
-          {{ (data.price - (data.price * (data.sale?.discountPercentage / 100))) | currency }} LE
-          <span class="old-price" *ngIf="data.sale?.discountPercentage">{{ data.price }}</span>
+          <div class="product-name">{{ data.description }}</div>
+          <div class="product-price">
+            {{ (data.price - (data.price * (data.sale?.discountPercentage / 100))) | currency }} LE
+            <span class="old-price" *ngIf="data.sale?.discountPercentage">
+              {{ data.price | currency }} LE
+            </span>
+          </div>
         </div>
       </div>

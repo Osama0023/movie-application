@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ProductService } from './all-product.service';
 import { Category, Product } from './all-product.module';
 import { SharedService } from '../shared/shared.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CartItem } from '../header/search-bar/cart/cart.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { CategoryService } from '../services/category.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-product',
@@ -30,6 +31,17 @@ export class AllProductComponent implements OnInit {
   categories: Category[] = [];
   selectedCategory: string | null = null;
   selectedValue: string ='';
+  isDropdownOpen = false;
+  selectedCategoryName: string = '';
+  isSortDropdownOpen = false;
+  selectedSortOption: string = '';
+  sortOptions: string[] = [
+    'A-Z',
+    'Z-A',
+    'Price, Low To High',
+    'Price, High To Low'
+  ];
+  breadcrumbs: { label: string; url: string }[] = [];
 
   constructor(
     private productService: ProductService,
@@ -37,8 +49,13 @@ export class AllProductComponent implements OnInit {
     private route: ActivatedRoute,
     private categoryService: CategoryService,
     private router: Router,
-
-  ) {}
+  ) {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.breadcrumbs = this.createBreadcrumbs(this.route.root);
+    });
+  }
 
   ngOnInit(): void {
     this.categoryService.getAll().subscribe((categories: Category[]) => {
@@ -88,6 +105,7 @@ export class AllProductComponent implements OnInit {
 
   loadAllProducts() {
     this.productService.getAllProducts().subscribe((products: Product[]) => {
+      console.log('a7aaa',products)
       this.productsByCategory = this.groupProductsByCategory(products);
     });
   }
@@ -132,5 +150,88 @@ export class AllProductComponent implements OnInit {
           break;
       }
     });
+  }
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  selectCategory(category: any) {
+    this.selectedValue = category._id;
+    this.selectedCategoryName = category.name;
+    this.isDropdownOpen = false;
+    
+    // Use your existing selection change logic
+    const event = {
+      value: category._id
+    };
+    this.onCategorySelectionChange(event);
+  }
+
+  toggleSortDropdown() {
+    this.isSortDropdownOpen = !this.isSortDropdownOpen;
+    if (this.isSortDropdownOpen) {
+      this.isDropdownOpen = false; // Close category dropdown if open
+    }
+  }
+
+  selectSortOption(option: string) {
+    this.selectedSortOption = option;
+    this.isSortDropdownOpen = false;
+    this.applySorting(option);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const categoryDropdown = document.querySelector('.custom-dropdown:not(.sort-dropdown)');
+    const sortDropdown = document.querySelector('.sort-dropdown');
+    
+    if (categoryDropdown && !categoryDropdown.contains(event.target as Node)) {
+      this.isDropdownOpen = false;
+    }
+    
+    if (sortDropdown && !sortDropdown.contains(event.target as Node)) {
+      this.isSortDropdownOpen = false;
+    }
+  }
+
+  private createBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: { label: string; url: string }[] = []): { label: string; url: string }[] {
+    const children: ActivatedRoute[] = route.children;
+
+    if (children.length === 0) {
+      return breadcrumbs;
+    }
+
+    for (const child of children) {
+      const routeURL: string = child.snapshot.url.map(segment => segment.path).join('/');
+      if (routeURL !== '') {
+        url += `/${routeURL}`;
+      }
+
+      // Add route label to breadcrumbs
+      if (child.snapshot.data['breadcrumb']) {
+        breadcrumbs.push({
+          label: child.snapshot.data['breadcrumb'],
+          url: url
+        });
+      }
+
+      // If there's a category parameter, add it to breadcrumbs
+      const categoryName = child.snapshot.paramMap.get('category');
+      if (categoryName) {
+        breadcrumbs.push({
+          label: categoryName,
+          url: url
+        });
+      }
+
+      return this.createBreadcrumbs(child, url, breadcrumbs);
+    }
+
+    return breadcrumbs;
+  }
+
+  navigateTo(url: string): void {
+    this.router.navigate([url]);
   }
 }

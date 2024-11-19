@@ -2,21 +2,63 @@
   Item is already in the cart!
 </div>
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Library</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Data</li>
-  </ol>
-</nav>
-                <mat-form-field class="w-100 " >
-                  <mat-label>All Department</mat-label>
-                  <mat-select [(ngModel)]="selectedValue" name="name" (selectionChange)="onCategorySelectionChange($event)">
-                    <mat-option *ngFor="let category of categories" [value]="category._id">
-                      {{ category.name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field> 
+<!-- Update the breadcrumb section -->
+<div class="breadcrumb-container">
+  <nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a [routerLink]="['/']">Home</a>
+      </li>
+      <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs; let last = last" [class.active]="last">
+        <ng-container *ngIf="!last">
+          <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+        </ng-container>
+        <ng-container *ngIf="last">
+          {{ breadcrumb.label }}
+        </ng-container>
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<!-- Filters Container -->
+<div class="filters-layout">
+  <!-- Category Dropdown (Left) -->
+  <div class="dropdown-container left">
+    <div class="custom-dropdown" [class.active]="isDropdownOpen">
+      <div class="dropdown-header" (click)="toggleDropdown()">
+        <span>{{ selectedCategoryName || 'All Department' }}</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="dropdown-menu" [class.show]="isDropdownOpen">
+        <div class="dropdown-item" 
+             *ngFor="let category of categories" 
+             [class.selected]="category._id === selectedValue"
+             (click)="selectCategory(category)">
+          {{ category.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sort By Dropdown (Right) -->
+  <div class="dropdown-container right">
+    <div class="custom-dropdown sort-dropdown" [class.active]="isSortDropdownOpen">
+      <div class="dropdown-header" (click)="toggleSortDropdown()">
+        <span>{{ selectedSortOption || 'Sort By' }}</span>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <div class="dropdown-menu" [class.show]="isSortDropdownOpen">
+        <div class="dropdown-item" 
+             *ngFor="let option of sortOptions" 
+             [class.selected]="option === selectedSortOption"
+             (click)="selectSortOption(option)">
+          {{ option }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <app-filter-products (sortOptionChanged)="applySorting($event)"></app-filter-products>
 
@@ -34,21 +76,22 @@
   </div>
 
   <ng-template #allCategories>
-    <!-- Display all categories when no specific category is selected -->
+    <!-- Only display categories that have products -->
     <div *ngFor="let category of categories">
-      <h2>{{ category.name }}</h2>
-      <div *ngIf="!productsByCategory[category.name]?.length">
-        No products available in this category.
-      </div>
-      <div class="row" *ngIf="productsByCategory[category.name]?.length">
-        <div class="col-md-3" *ngFor="let product of productsByCategory[category.name]">
-          <app-product [data]="product" (item)="addToCart($event)" (productSelected)="navigateToProductDetails($event)"></app-product>
+      <div *ngIf="productsByCategory[category.name]?.length > 0">
+        <h2>{{ category.name }}</h2>
+        <div class="row">
+          <div class="col-md-3" *ngFor="let product of productsByCategory[category.name]">
+            <app-product [data]="product" (item)="addToCart($event)" (productSelected)="navigateToProductDetails($event)"></app-product>
+          </div>
         </div>
       </div>
     </div>
   </ng-template>
 
   <ng-template #noProducts>
-    <p>No products available in this category.</p>
+    <div class="no-products">
+      <p>No products available in this category</p>
+    </div>
   </ng-template>
 </div>
