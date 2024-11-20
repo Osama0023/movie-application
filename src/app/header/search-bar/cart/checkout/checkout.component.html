@@ -1,43 +1,72 @@
 <div class="checkout-container">
-    
-
+  <div class="left-column">
     <form class="checkout-form" [formGroup]="checkoutForm">
-      <h3>Contact</h3>
+      <h3>Contact Information</h3>
       <div class="form-group">
-        <label for="email">Email or mobile phone number</label>
-        <input type="text" id="email" name="email" placeholder="number" formControlName="email" required> 
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          [class.invalid]="isFieldInvalid('email')"
+          placeholder="Enter your email address" 
+          formControlName="email">
+        <div class="error-message" *ngIf="isFieldInvalid('email')">
+          {{ getErrorMessage('email') }}
+        </div>
       </div>
 
-      <h3>Delivery</h3>
+      <h3>Shipping Details</h3>
       <div class="form-group">
-        <label for="country">Country/Region</label>
-        <input type="text" id="country" name="country" value="country" formControlName="country" readonly> 
+        <label for="firstName">First Name</label>
+        <input 
+          type="text" 
+          id="firstName" 
+          [class.invalid]="isFieldInvalid('firstName')"
+          placeholder="Enter your first name" 
+          formControlName="firstName">
+        <div class="error-message" *ngIf="isFieldInvalid('firstName')">
+          {{ getErrorMessage('firstName') }}
+        </div>
       </div>
+
       <div class="form-group">
-        <label for="first-name">First name</label>
-        <input type="text" id="first-name" name="first-name" placeholder="name" formControlName="firstName">
+        <label for="lastName">Last Name</label>
+        <input 
+          type="text" 
+          id="lastName" 
+          [class.invalid]="isFieldInvalid('lastName')"
+          placeholder="Enter your last name" 
+          formControlName="lastName">
+        <div class="error-message" *ngIf="isFieldInvalid('lastName')">
+          {{ getErrorMessage('lastName') }}
+        </div>
       </div>
-      <div class="form-group">
-        <label for="last-name">Last name</label>
-        <input type="text" id="last-name" name="last-name" placeholder="last name" formControlName="lastName">
-      </div>
+
       <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" id="address" name="address" placeholder="Address" formControlName="address">
+        <input 
+          type="text" 
+          id="address" 
+          [class.invalid]="isFieldInvalid('address')"
+          placeholder="Enter your complete address" 
+          formControlName="address">
+        <div class="error-message" *ngIf="isFieldInvalid('address')">
+          {{ getErrorMessage('address') }}
+        </div>
       </div>
+
       <div class="form-group">
         <label for="city">City</label>
-        <input type="text" id="city" name="city" placeholder="City" formControlName="city">
+        <input type="text" id="city" name="city" placeholder="Enter your city" formControlName="city">
       </div>
+      
       <div class="form-group">
         <label for="phone">Secondary Phone number</label>
-        <input type="text" id="phone" name="phone" placeholder="number" formControlName="secNumber">
+        <input type="text" id="phone" name="phone" placeholder="Enter alternative phone number" formControlName="secNumber">
       </div>
 
-    </form>
-
-    <div class="billing-address">
-        <h3>Billing address</h3>
+      <div class="billing-address">
+        <h3>Billing Address</h3>
         <div class="billing-options">
           <label class="billing-option">
             <input type="radio" name="billing-address" value="same" checked>
@@ -49,58 +78,60 @@
           </label>
         </div>
       </div>
-      <div class="billing-address">
+
+      <div class="payment-section">
         <h3>Payment Method</h3>
-        <div class="billing-options">
-          <label class="billing-option">
-            <input type="radio" name="billing-address" value="same" checked>
-            <span>Cash</span>
+        <div class="payment-options">
+          <label class="payment-option">
+            <input type="radio" name="payment" value="cash" checked>
+            <div class="payment-content">
+              <span class="payment-title">Cash on Delivery</span>
+              <span class="payment-description">Pay when you receive</span>
+            </div>
           </label>
-          <label class="billing-option">
-            <input type="radio" name="billing-address" value="different">
-            <span>Visa</span>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="card">
+            <div class="payment-content">
+              <span class="payment-title">Credit/Debit Card</span>
+              <span class="payment-description">Secure payment online</span>
+            </div>
           </label>
-          <label class="billing-option">
-            <input type="radio" name="billing-address" value="different">
-            <span>Vodafone Cash / Fawry</span>
-          </label>
-
         </div>
       </div>
-
-      
-      <!-- <div class="billing-section">
-        <h3>Billing address</h3>
-        <div class="billing-address-option">
-          <label>
-            <input type="radio" name="billing-address" value="same" checked> Same as shipping address
-          </label>
-          <label>
-            <input type="radio" name="billing-address" value="different"> Use a different billing address
-          </label>
-        </div>
-      </div> -->
-  
-      <div class="order-summary">
-        <h3>Order Summary</h3>
-        <div class="item">
-          <span>Items 
-            
-          </span> <span>{{items}}</span>
-        </div>
-        <div class="shipping">
-          <span>Shipping</span> <span>0</span>
-        </div>
-        <div class="total">
-          <span>Total</span> <span>{{total}}</span>
-        </div>
-        <div class="savings">
-          <span>Total Savings</span> <span class="old-price">{{savings}}</span>
-        </div>
-      </div>
-      <button type="submit" class="submit-btn" (click)="Purchase()">Complete Order</button>
-
+    </form>
   </div>
+
+  <div class="right-column">
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+      <div class="summary-content">
+        <div class="summary-item">
+          <span>Items ({{items}})</span>
+          <span>{{total | currency:'EGP '}}</span>
+        </div>
+        <div class="summary-item">
+          <span>Shipping</span>
+          <span class="free">Free</span>
+        </div>
+        <div class="summary-item savings">
+          <span>Your Savings</span>
+          <span>{{savings | currency:'EGP '}}</span>
+        </div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span>{{total | currency:'EGP '}}</span>
+        </div>
+      </div>
+      <button 
+        type="button" 
+        class="checkout-button" 
+        [disabled]="checkoutForm.invalid"
+        (click)="Purchase()">
+        Complete Purchase
+      </button>
+    </div>
+  </div>
+</div>
 
 
     

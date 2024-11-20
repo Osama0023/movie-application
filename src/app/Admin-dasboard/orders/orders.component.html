@@ -1,26 +1,83 @@
-<div class="order-card" *ngFor="let order of orders">
-    <h3>Order for {{ order.name }}</h3>
-    <p>Email: {{ order.email }}</p>
-    <p>Address: {{ order.address }}</p>
-    <p>Total Price: ${{ order.totalPrice }}</p>
-  
-    <div class="items">
-      <h4>Items:</h4>
-      <div *ngFor="let item of order.items" class="item">
-        <p>Product ID: {{ item.product }}</p>
-        <p>Quantity: {{ item.quantity }}</p>
+<div class="orders-container">
+  <div class="orders-header">
+    <h1>Order Management</h1>
+    <p class="subtitle">Track and manage customer orders</p>
+  </div>
+
+  <div class="status-filters">
+    <button 
+      *ngFor="let status of orderStatuses" 
+      class="status-btn"
+      [class.active]="currentStatus === status"
+      (click)="filterByStatus(status)">
+      <i class="fas" [ngClass]="getStatusIcon(status)"></i>
+      {{ status | titlecase }}
+      <span class="count">{{ getOrdersCount(status) }}</span>
+    </button>
+  </div>
+
+  <div class="orders-grid">
+    <div class="order-card" *ngFor="let order of filteredOrders">
+      <div class="order-header">
+        <div class="order-id">
+          <span class="label">Order ID:</span>
+          <span class="value">#{{ order._id?.slice(-6).toUpperCase() }}</span>
+        </div>
+        <div class="order-date">
+          {{ order.createdAt | date:'medium' }}
+        </div>
+      </div>
+
+      <div class="customer-info">
+        <div class="info-item">
+          <i class="fas fa-user"></i>
+          <span>{{ order.name }}</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-envelope"></i>
+          <span>{{ order.email }}</span>
+        </div>
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>{{ order.address }}</span>
+        </div>
+      </div>
+
+      <div class="order-items">
+        <h4>Order Items</h4>
+        <div class="items-grid">
+          <div class="item" *ngFor="let item of order.items">
+            <span class="quantity">{{ item.quantity }}x</span>
+            <span class="product-id">{{ item.product }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="order-footer">
+        <div class="price">
+          <span class="label">Total Amount:</span>
+          <span class="value">{{ order.totalPrice | currency:'EGP ' }}</span>
+        </div>
+        
+        <div class="status-control">
+          <select 
+            [ngModel]="order.status" 
+            (ngModelChange)="updateOrderStatus(order, $event)"
+            [class]="'status-' + order.status">
+            <option *ngFor="let status of orderStatuses" [value]="status">
+              {{ status | titlecase }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
-  
-    <div class="order-status">
-      <label for="status-{{ order.name }}">Order Status:</label>
-      <select id="status-{{ order.name }}" [(ngModel)]="order.status">
-        <option value="ordered">Ordered</option>
-        <option value="prepared">Prepared</option>
-        <option value="shipped">Shipped</option>
-        <option value="delivered">Delivered</option>
-      </select>
-      <button (click)="updateOrderStatus(order)">Update Status</button>
-    </div>
   </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredOrders.length === 0">
+    <i class="fas fa-box-open"></i>
+    <h3>No Orders Found</h3>
+    <p>There are no orders with the selected status</p>
+  </div>
+</div>
   

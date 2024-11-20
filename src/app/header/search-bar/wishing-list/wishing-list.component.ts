@@ -1,21 +1,43 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from '../../../shared/shared.service';
-import { Product } from '../../../all-product/all-product.module'; 
+import { Product } from '../../../all-product/all-product.module';
+import { Router } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-wishing-list',
   templateUrl: './wishing-list.component.html',
-  styleUrls: ['./wishing-list.component.scss']
+  styleUrls: ['./wishing-list.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        animate('300ms', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class WishingListComponent implements OnInit {
-  wishlistItems: any[] = [];
+  wishlistItems: Product[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 8;
-  pagedItems: any[] = [];
+  pagedItems: Product[] = [];
+  showNotification: boolean = false;
+  notificationMessage: string = '';
 
-  constructor(private sharedService: SharedService) {}
+  constructor(
+    private sharedService: SharedService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.loadWishlistItems();
+  }
+
+  loadWishlistItems() {
     this.wishlistItems = this.sharedService.getWishlistItems();
     this.updatePagedItems();
   }
@@ -31,13 +53,39 @@ export class WishingListComponent implements OnInit {
     this.updatePagedItems();
   }
 
-  addToCart(item: any) {
-    // Implement add to cart logic
+  addToCart(event: Event, item: Product) {
+    event.stopPropagation();
+    const cartItem = {
+      item: item,
+      quantity: 1
+    };
+    
+    const added = this.sharedService.addToCart(cartItem);
+    if (added) {
+      this.showNotification = true;
+      this.notificationMessage = 'Product added to cart successfully!';
+      this.removeFromWishlist(event, item); // Remove from wishlist after adding to cart
+      
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 3000);
+    } else {
+      this.showNotification = true;
+      this.notificationMessage = 'Product is already in cart!';
+      
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 3000);
+    }
   }
 
-  removeFromWishlist(item: any) {
-    this.sharedService.removeFromWishlist(item.id);
-    this.wishlistItems = this.sharedService.getWishlistItems(); // Refresh the wishlist items
-    this.updatePagedItems();
+  removeFromWishlist(event: Event, item: Product) {
+    event.stopPropagation();
+    this.sharedService.removeFromWishlist(item._id);
+    this.loadWishlistItems();
+  }
+
+  navigateToDetails(item: Product) {
+    this.router.navigate(['/product', item._id]);
   }
 }

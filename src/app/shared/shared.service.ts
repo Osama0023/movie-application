@@ -36,7 +36,8 @@ export class SharedService {
    updateCartCountFromLocalStorage() {
     if (this.isLocalStorageAvailable()) {
       const cartItems: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
-      this.cartCountSource.next(cartItems.length);
+      const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+      this.cartCountSource.next(totalItems);
     } else {
       this.cartCountSource.next(0); // Fallback if localStorage is not available
     }
@@ -145,5 +146,10 @@ export class SharedService {
   decrementWishlistCount() {
     const currentCount = this.wishlistCountSource.value;
     this.wishlistCountSource.next(currentCount > 0 ? currentCount - 1 : 0);
+  }
+
+  // Add this new method to directly update cart count
+  updateCartCount(count: number) {
+    this.cartCountSource.next(count);
   }
 }

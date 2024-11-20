@@ -1,81 +1,97 @@
-<div class="container">
-    <div class="left-section">
-        <h1>Create your account</h1>
-
-        <!-- <button class="google-login">
-            <img src="google-icon.png" alt="Google Icon" class="google-icon">
-            Login with Google
-        </button> -->
+<div class="login-container">
+  <div class="login-wrapper">
+    <!-- Left Section -->
+    <div class="login-content">
+      <div class="form-section">
+        <h1>{{ isLoginMode ? 'Welcome Back' : 'Create Account' }}</h1>
+        <p class="subtitle">{{ isLoginMode ? 'Sign in to continue' : 'Register to get started' }}</p>
 
         <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-            <!-- <div class="form-group">
-                <label for="name">Name<span>*</span></label>
-                <input type="text" id="name" name="name" placeholder="Enter your name" required>
-            </div> -->
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" ngModel required email>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope"></i>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="Enter your email" 
+                ngModel 
+                required 
+                email>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" 
-                placeholder="Enter your password" name="password" id="password" ngModel required minlength="3">
-            </div>
-            <div class="form-group" *ngIf="!isLoginMode">
-                <label for="password">Confirm Password</label>
-                <input type="password" class="form-control" 
-                placeholder="Confirm your password" name="password_confirmation"
-                id="password_confirmation" ngModel required minlength="3" >
-            </div>
+          </div>
 
-            <!-- <div class="form-group checkbox">
-                <input type="checkbox" id="terms" name="terms" required>
-                <label for="terms">I agree to all Term, Privacy Policy and Fees</label>
-            </div> -->
-            <button type="submit" class="sign-up-btn" 
-            [disabled]="!authForm.valid"
-            
-            >{{isLoginMode ? 'Login' : 'SignUp'}}</button>
-            <p class="login-link">Already have an account? <a  
-                type="button" (click)="onSwitchMode()"> {{isLoginMode ? 'SignUp' : 'Login'}}</a></p>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock"></i>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                placeholder="Enter your password" 
+                ngModel 
+                required 
+                minlength="3">
+            </div>
+          </div>
 
-                <p class="login-link"> <a  
-                    type="button" (click)="onSwitchMode()" *ngIf="isLoginMode">Forgot Password?</a></p>
-    
+          <div class="form-group" *ngIf="!isLoginMode">
+            <label for="password_confirmation">Confirm Password</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock"></i>
+              <input 
+                type="password" 
+                id="password_confirmation" 
+                name="password_confirmation" 
+                placeholder="Confirm your password" 
+                ngModel 
+                required 
+                minlength="3">
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button 
+              type="submit" 
+              class="submit-btn" 
+              [disabled]="!authForm.valid">
+              {{ isLoginMode ? 'Sign In' : 'Create Account' }}
+            </button>
+
+            <p class="switch-mode">
+              {{ isLoginMode ? 'Don\'t have an account?' : 'Already have an account?' }}
+              <a (click)="onSwitchMode()">
+                {{ isLoginMode ? 'Sign Up' : 'Sign In' }}
+              </a>
+            </p>
+
+            <a class="forgot-password" *ngIf="isLoginMode" (click)="onSwitchMode()">
+              Forgot Password?
+            </a>
+          </div>
         </form>
 
-    </div>
-    <div class="right-section">
-        <img src="assets/images/logo.png" alt="Furniture Image" class="furniture-img">
-        
-    </div>
-</div>
-<!-- <div class="row">
-  <div class="col-xs-12 col-md-6 col-md-offset-3">
-      <div class="alert alert-danger" *ngIf="error">
-          <p>{{error}}</p>
-      </div>
-      <div *ngIf="isLoading" style="text-align: center;">
-          <app-loading-spinner ></app-loading-spinner>
-      </div>
-      <form  #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
-          <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" class="form-control" name="email" id="email" ngModel required email>
-          </div>
-          <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" name="password" id="password" ngModel required minlength="3">
-          </div>
-          <div class="form-group" *ngIf="!isLoginMode">
-            <label for="password">Password Confitmation</label>
-            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" ngModel required minlength="3" >
+        <div class="loading-spinner" *ngIf="isLoading">
+          <app-loading-spinner></app-loading-spinner>
         </div>
 
-          <div>
-              <button class="btn btn-primary" type="submit" [disabled]="!authForm.valid">{{isLoginMode ? 'Login' : 'SignUp'}}</button>
-              <button class="btn btn-primary" type="button" (click)="onSwitchMode()">Switch To {{isLoginMode ? 'SignUp' : 'Login'}}</button>
-          </div>
-      </form>
+        <div class="error-message" *ngIf="error">
+          {{ error }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="logo-section">
+      <div class="logo-wrapper">
+        <img src="assets/images/logo.png" alt="Logo" class="logo">
+        <div class="content">
+          <h2>Welcome to Our Store</h2>
+          <p>Discover amazing products and great deals</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div> -->
+</div>

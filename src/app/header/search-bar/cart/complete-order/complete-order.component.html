@@ -1,34 +1,35 @@
-<div *ngIf="order" class="order-confirmation">
-  <div class="order-header">
-    <h2>EMBABI STORE</h2>
-    <div class="order-summary">
-      <span>Order #{{ order.orderNumber }}</span>
-      <span class="thank-you">Thank you, {{ order.name }}!</span>
-      <div class="order-total">
-        <span>£E {{ order.totalPrice }}</span>
+<div class="complete-order-container">
+  <div class="order-success">
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h1>Order Completed Successfully!</h1>
+    <p>Thank you for your purchase</p>
+    
+    <div class="order-details" *ngIf="orderDetails">
+      <h2>Order Summary</h2>
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="label">Order Total:</span>
+          <span class="value">{{orderDetails.totalPrice | currency:'EGP '}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Shipping Address:</span>
+          <span class="value">{{orderDetails.address}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Customer Name:</span>
+          <span class="value">{{orderDetails.name}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Email:</span>
+          <span class="value">{{orderDetails.email}}</span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="order-confirmation-status">
-    <p>Your order is confirmed</p>
-    <p>You’ll receive a confirmation text with your order number shortly.</p>
-  </div>
-
-  <div class="order-details">
-    <h3>Order details</h3>
-    <div class="contact-info">
-      <p><strong>Contact information</strong></p>
-      <p>{{ order.email }}</p>
-    </div>
-    <div class="shipping-info">
-      <p><strong>Shipping address</strong></p>
-      <p>{{ order.name }}</p>
-      <p>{{ order.address }}</p>
-    </div>
-    <div class="payment-method">
-      <p><strong>Payment method</strong></p>
-      <p>Cash on Delivery (COD) – £E {{ order.totalPrice }}</p>
-    </div>
+    <button class="continue-shopping" (click)="backToShopping()">
+      Continue Shopping
+    </button>
   </div>
 </div>
