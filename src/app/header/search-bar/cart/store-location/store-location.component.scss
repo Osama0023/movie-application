@@ -4,26 +4,114 @@
   padding: 2rem 0;
 }
 
-.breadcrumb {
-  background: transparent;
-  padding: 1rem 2rem;
-  margin-bottom: 2rem;
+.breadcrumb-nav {
+  padding: 2rem 1.5rem;
+  border-radius: 0;
+  margin: 0 0 2rem 0;
+  width: 100%;
+  max-width: 1200px;
 
-  .breadcrumb-item {
-    font-size: 0.9rem;
-    
-    a {
-      color: #007bff;
-      text-decoration: none;
-      transition: color 0.3s ease;
+  .breadcrumb {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 
-      &:hover {
-        color: #0056b3;
+    .breadcrumb-item {
+      font-size: 1.75rem;
+      color: #333;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+
+      a {
+        color: #666;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+
+        &:hover {
+          color: #2196f3;
+          text-decoration: none;
+
+          &::after {
+            width: 100%;
+          }
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: #2196f3;
+          transition: width 0.3s ease;
+        }
+      }
+
+      &.active {
+        color: #2196f3;
+        font-weight: 700;
+      }
+
+      & + .breadcrumb-item::before {
+        content: '›';
+        color: #999;
+        font-size: 1.8rem;
+        line-height: 1;
+        font-weight: 300;
+        margin: 0 0.5rem;
+        padding: 0;
       }
     }
+  }
 
-    &.active {
-      color: #6c757d;
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.breadcrumb-container {
+  background: white;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .breadcrumb-nav {
+    padding: 1.5rem 1rem;
+    margin: 0 0 1.5rem 0;
+    
+    .breadcrumb {
+      .breadcrumb-item {
+        font-size: 1.25rem;
+        
+        & + .breadcrumb-item::before {
+          font-size: 1.4rem;
+        }
+      }
     }
   }
 }

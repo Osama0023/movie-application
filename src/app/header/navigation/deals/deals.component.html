@@ -2,30 +2,23 @@
     Item is already in the cart!
   </div>
   
+  <div class="breadcrumb-container">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/']">Home</a>
+        </li>
+        <li class="breadcrumb-item active">
+          Hot Deals
+        </li>
+      </ol>
+    </nav>
+  </div>
+  
   <div class="container">
     <div class="row">
       <div *ngFor="let product of deals" class="col-md-3">
-        <div class="product-card">
-          <div class="discount-badge" *ngIf="product.sale?.discountPercentage">
-            {{ product.sale.discountPercentage }}%
-          </div>
-  
-          <div class="image-container position-relative">
-            <img [src]="product.image || 'assets/images/mobile-iphone.jpg'" alt="{{ product.name }}">
-            <i class="icon-cart fa-regular fa-heart" (click)="toggleIcon($event, product, 'wishlist')"></i>
-            <div class="color-options" *ngIf="product.colors">
-              <span *ngFor="let color of product.colors" [ngStyle]="{'background-color': color}"></span>
-            </div>
-            <i class="icon-wishlist fa-solid fa-cart-shopping" (click)="addToCart(product)"></i>
-          </div>
-  
-          <div class="product-brand">{{ product.name }}</div>
-          <div class="product-name">{{ product.description }}</div>
-          <div class="product-price">
-            {{ (product.price - (product.price * (product.sale?.discountPercentage / 100))) | currency }} LE
-            <span class="old-price" *ngIf="product.sale?.discountPercentage">{{ product.price }}</span>
-          </div>
-        </div>
+        <app-product [data]="product" (item)="addToCart($event)" (productSelected)="navigateToProductDetails($event)"></app-product>
       </div>
     </div>
   </div>

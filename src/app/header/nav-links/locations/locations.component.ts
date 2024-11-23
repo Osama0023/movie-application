@@ -11,12 +11,12 @@ export class LocationsComponent {
   apiLoaded: boolean = false;
 
   // Center of the map (coordinates of Toronto)
-  center: google.maps.LatLngLiteral = { lat: 35.219935537492844, lng: -97.44287187051303 };
+  center: google.maps.LatLngLiteral = { lat: 30.05068305762823, lng: 31.34960441481757 };
   zoom = 10;
-
+  
   // Locations array with coordinates and address
   locations = [
-    { lat: 35.219935537492844, lng: -97.44287187051303, title: 'Toronto', address: 'Suite 360-144 Front Street West, Toronto, Ontario, M5J 2L7' },
+    { lat: 30.05068305762823, lng: 31.34960441481757, title: 'Toronto', address: 'Suite 360-144 Front Street West, Toronto, Ontario, M5J 2L7' },
     // Add other locations here
   ];
   constructor() {}

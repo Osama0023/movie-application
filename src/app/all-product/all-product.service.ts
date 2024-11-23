@@ -42,7 +42,7 @@ export class ProductService {
          );
      }
      getProductById(id: string): Observable<Product> {
-        return this.http.get<Product>(`http://yourapi.com/products/${id}`);
+        return this.http.get<Product>(`http://localhost:3000/api/products/${id}`);
       }
 
       

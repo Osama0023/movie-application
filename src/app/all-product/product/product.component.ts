@@ -24,46 +24,44 @@ import { Router } from '@angular/router';
     @Input() data!: Product;
     @Output() item = new EventEmitter();
     quantity: number = 1;
-    @Output() productSelected = new EventEmitter<Product>();
 
     constructor(
       private sharedService: SharedService,
-      private router: Router // Inject Router
-      ) {}
+      private router: Router
+    ) {}
 
     ngOnInit(): void {}
 
-    toggleIcon(event: any, type: 'cart' | 'wishlist') {
-      const element = event.target;
+    navigateToDetails() {
+      this.router.navigate(['/product', this.data._id], {
+        state: { product: this.data }
+      });
+    }
+
+    toggleIcon(event: Event, type: 'cart' | 'wishlist') {
+      event.stopPropagation();
+      const element = event.target as HTMLElement;
   
       if (type === 'wishlist') {
-        // If the item is already in wishlist, remove it
         if (this.sharedService.isItemInWishlist(this.data._id)) {
           element.classList.remove('clicked');
           this.sharedService.removeFromWishlist(this.data._id);
         } else {
-          // If the item is not in wishlist, add it
           element.classList.add('clicked');
           this.sharedService.addToWishlist(this.data);
         }
       }
       if (type === 'cart') {
-        // If the item is already in wishlist, remove it
         if (this.sharedService.isItemInCart(this.data._id)) {
           element.classList.add('clicked');
-        }  
+        }
       }
+    }
 
-    }
-    navigateToDetails() {
-      this.productSelected.emit(this.data);
-    }
-  
-    add() {
+    add(event?: Event) {
+      if (event) {
+        event.stopPropagation();
+      }
       this.item.emit({ item: this.data, quantity: this.quantity });
-          // Navigate to product details page using the product name
-    // const productName = this.data.name.replace(/\s+/g, '-').toLowerCase(); // Replace spaces with hyphens and make it lowercase
-    // this.router.navigate([`/home/${productName}`]); // Navigate to the product details page
-
     }
   }

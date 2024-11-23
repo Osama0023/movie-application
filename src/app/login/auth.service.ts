@@ -7,7 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
 
 export interface AuthResponseData {
   token: string;
-  role:string
+  role: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -15,19 +15,17 @@ export class AuthService {
   user = new Subject<User>();
   constructor(
     private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object // Inject platform ID
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.autoLogin();
   }
 
-  signUp(email: string, password: string, password_confirmation: string) {
+  signUp(email: string, password: string, confirmPassword: string) {
     return this.http
       .post<AuthResponseData>('http://localhost:3000/auth/signup', {
-        user: {
-          email: email,
-          password: password,
-          password_confirmation: password_confirmation,
-        },
+        email,
+        password,
+        confirmPassword
       })
       .pipe(
         catchError(this.handleError),
@@ -94,18 +92,13 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred';
-    if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
+    
+    if (errorRes.error && errorRes.error.message) {
+      errorMessage = errorRes.error.message;
+    } else if (errorRes.error && errorRes.error.error && errorRes.error.error.message) {
+      errorMessage = errorRes.error.error.message;
     }
 
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email already exists.';
-        break;
-      case 'INVALID_LOGIN_CREDENTIALS':
-        errorMessage = 'Invalid credentials.';
-        break;
-    }
-    return throwError(errorMessage);
+    return throwError(() => errorMessage);
   }
 }

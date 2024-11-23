@@ -33,22 +33,31 @@
                 placeholder="Enter your password" 
                 ngModel 
                 required 
-                minlength="3">
+                minlength="3"
+                #passwordField="ngModel"
+                (input)="checkPasswordMatch(authForm)">
             </div>
           </div>
 
           <div class="form-group" *ngIf="!isLoginMode">
-            <label for="password_confirmation">Confirm Password</label>
+            <label for="confirmPassword">Confirm Password</label>
             <div class="input-wrapper">
               <i class="fas fa-lock"></i>
               <input 
                 type="password" 
-                id="password_confirmation" 
-                name="password_confirmation" 
+                id="confirmPassword" 
+                name="confirmPassword" 
                 placeholder="Confirm your password" 
                 ngModel 
                 required 
-                minlength="3">
+                minlength="3"
+                #confirmPasswordField="ngModel"
+                (input)="checkPasswordMatch(authForm)"
+                [class.invalid-input]="!passwordsMatch && confirmPasswordField.touched">
+              </div>
+            <div class="error-message password-mismatch" 
+                 *ngIf="!passwordsMatch && confirmPasswordField.touched && confirmPasswordField.value">
+              Passwords must match
             </div>
           </div>
 
@@ -56,7 +65,7 @@
             <button 
               type="submit" 
               class="submit-btn" 
-              [disabled]="!authForm.valid">
+              [disabled]="!authForm.valid || (!isLoginMode && !passwordsMatch)">
               {{ isLoginMode ? 'Sign In' : 'Create Account' }}
             </button>
 
@@ -95,3 +104,21 @@
     </div>
   </div>
 </div>
+
+<style>
+.invalid-input {
+  border: 1px solid #ff4444 !important;
+  background-color: #fff2f2;
+}
+
+.error-message.password-mismatch {
+  color: #ff4444;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+</style>

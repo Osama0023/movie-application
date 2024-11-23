@@ -25,31 +25,22 @@ export class DealsComponent implements OnInit {
   deals: Product[] = [];
   showNotification: boolean = false;
 
-constructor(private productService: ProductService,
+  constructor(
+    private productService: ProductService,
     private sharedService: SharedService,
-    private router: Router // Inject Router
+    private router: Router
+  ) {}
 
-  ){}
   ngOnInit(): void {
     this.loadDeals();
   }
+
   loadDeals(): void {
     this.productService.getAllProducts().subscribe((products: Product[]) => {
-      this.deals = products.filter(product => product.sale); // Filter for products on sale
+      this.deals = products.filter(product => product.sale);
     });
   }
 
-  toggleIcon(event: Event, product: Product, type: 'cart' | 'wishlist'): void {
-    event.stopPropagation();
-    if (type === 'wishlist') {
-      if (this.sharedService.isItemInWishlist(product._id)) {
-        this.sharedService.removeFromWishlist(product._id);
-      } else {
-        this.sharedService.addToWishlist(product);
-      }
-    }
-  }
-    
   addToCart(product: Product): void {
     const added = this.sharedService.addToCart({ item: product, quantity: 1 });
     if (!added) {
@@ -58,5 +49,9 @@ constructor(private productService: ProductService,
         this.showNotification = false;
       }, 2000);
     }
+  }
+
+  navigateToProductDetails(productId: string): void {
+    this.router.navigate(['/product', productId]);
   }
 }

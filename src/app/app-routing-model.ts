@@ -35,6 +35,11 @@ const route : Routes = [
   {path: 'admin-dashboard' , component: CatogoryDashboardComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'complete-order', component: CompleteOrderComponent},
+  {
+    path: 'product/:id',
+    component: ProductDetailsComponent,
+    data: { breadcrumb: 'Product Details' }
+  },
   // { path: 'product-details', component: ProductDetailsComponent }, // Route to product details page
   {path:'**', component: AuthComponent},
 

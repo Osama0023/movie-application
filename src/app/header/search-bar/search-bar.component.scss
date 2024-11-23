@@ -1,6 +1,8 @@
 /* Navbar container */
 .navbar {
-    padding: 0rem 2rem;
+    background: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   
     .container-fluid {
       display: flex;
@@ -31,27 +33,45 @@
         margin: 0 20px;
         font-weight: 500;
         text-transform: uppercase;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Inter', sans-serif;
         
         .nav-link {
-          color: #333;
+          color: #2c3e50;
           text-decoration: none;
-          transition: color 0.3s ease;
+          transition: all 0.3s ease;
+          position: relative;
+  
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #3498db;
+            transition: width 0.3s ease;
+          }
   
           &:hover {
-            color: #007bff;
+            color: #3498db;
+            
+            &::after {
+              width: 100%;
+            }
           }
         }
       }
       
       /* HOT badge for Deals */
       .badge-hot {
-        background-color: red;
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
         color: white;
         font-size: 0.75rem;
-        padding: 0.2rem 0.5rem;
-        border-radius: 5px;
-        font-weight: bold;
+        padding: 0.25rem 0.6rem;
+        border-radius: 20px;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(231,76,60,0.2);
+        margin-left: 8px;
       }
     }
   
@@ -61,34 +81,128 @@
       align-items: center;
   
       .nav-item {
-        margin-left: 25px; /* Adds gap between each icon */
+        margin-left: 25px;
         
         .icon-link {
-          color: #333;
+          color: #2c3e50;
           position: relative;
+          transition: all 0.3s ease;
   
           i {
             font-size: 1.4rem;
+            transition: all 0.3s ease;
           }
   
           /* Badge for cart and wishlist count */
           .badge {
             position: absolute;
-            top: -5px;
-            right: -10px;
-            background-color: #dc3545;
+            top: -8px;
+            right: -12px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             font-size: 0.75rem;
-            padding: 0.2rem 0.4rem;
+            padding: 0.25rem 0.5rem;
             border-radius: 50%;
             color: white;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(231,76,60,0.2);
           }
   
           &:hover {
-            color: #007bff;
-            text-decoration: none;
+            color: #3498db;
+            transform: translateY(-2px);
+
+            i {
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+    }
+}
+  
+// Add smooth transition for all interactive elements
+* {
+    transition: all 0.3s ease;
+}
+  
+// Add these media queries at the bottom
+@media (max-width: 992px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+
+    .container-fluid {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .middle-nav {
+      order: 3;
+      width: 100%;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+      border-top: 1px solid #eee;
+
+      .nav-item {
+        font-size: 1.1rem;
+        margin: 0 10px;
+      }
+    }
+
+    .icons-container {
+      .nav-item {
+        margin-left: 15px;
+        
+        .icon-link {
+          i {
+            font-size: 1.2rem;
           }
         }
       }
     }
   }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    .middle-nav {
+      .nav-item {
+        font-size: 1rem;
+        margin: 0 5px;
+      }
+    }
+
+    .icons-container {
+      .nav-item {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.5rem;
+
+    .middle-nav {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      
+      .nav-item {
+        width: calc(50% - 10px);
+        text-align: center;
+      }
+    }
+
+    .icons-container {
+      .nav-item {
+        .icon-link {
+          span.badge {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.4rem;
+          }
+        }
+      }
+    }
+  }
+}
   

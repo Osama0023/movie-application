@@ -1,17 +1,17 @@
-      <div class="product-card" (click)="navigateToDetails()">
+      <div class="product-card">
         <div class="discount-badge" *ngIf="data.sale?.discountPercentage">
           -{{ data.sale?.discountPercentage }}%
         </div>
 
         <div class="image-container">
-          <img src="assets/images/mobile-iphone.jpg" [alt]="data.name">
+          <img src="assets/images/mobile-iphone.jpg" [alt]="data.name" (click)="navigateToDetails()">
           
-          <div class="action-icons">
+          <div class="action-icons" (click)="$event.stopPropagation()">
             <i class="icon-cart fa-regular fa-heart" (click)="toggleIcon($event, 'wishlist')"></i>
             <i class="icon-wishlist fa-solid fa-cart-shopping" (click)="toggleIcon($event, 'cart'); add()"></i>
           </div>
 
-          <div class="color-options" *ngIf="data.colors && data.colors.length > 0">
+          <div class="color-options" *ngIf="data.colors && data.colors.length > 0" (click)="$event.stopPropagation()">
             <div class="color-item" *ngFor="let color of data.colors">
               <span class="color-dot" [style.background-color]="color.colorName">
                 <span class="color-quantity">{{ color.quantity }}</span>
@@ -21,7 +21,7 @@
         </div>
         
         <div class="product-info">
-          <div class="product-brand">{{ data.name }}</div>
+          <div class="product-brand" (click)="navigateToDetails()">{{ data.name }}</div>
           <div class="product-name">{{ data.description }}</div>
           <div class="product-price">
             {{ (data.price - (data.price * (data.sale?.discountPercentage / 100))) | currency }} LE

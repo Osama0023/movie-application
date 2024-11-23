@@ -2,17 +2,101 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
   
 .top-bar {
-            background-color: #28356a;
-            color: #dddddd;
-            padding: 15px 0;
-            font-family: 'Inter';
-            font-weight: 500;
-            .top-icon{
-              color: #c5beaa;
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: #ffffff;
+    padding: 15px 0;
+    font-family: 'Inter';
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 
-            }
-            .top-icon-lang{
-              color: white;
-            }
+    .top-icon {
+        color: #ecf0f1;
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: #f1c40f;
+            transform: translateY(-2px);
         }
+    }
+
+    .top-icon-lang {
+        color: #ecf0f1;
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: #f1c40f;
+        }
+    }
+
+    a {
+        color: #ecf0f1 !important;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        position: relative;
+
+        &:hover {
+            color: #f1c40f !important;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #f1c40f;
+            transition: width 0.3s ease;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+    }
+
+    .mx-2 {
+        color: rgba(255,255,255,0.5);
+    }
+}
+     
+@media (max-width: 992px) {
+  .top-bar {
+    padding: 10px 0;
+    font-size: 0.9rem;
+
+    .container-fluid {
+      padding: 0 10px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    .d-flex {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center !important;
+      text-align: center;
+
+      > div {
+        width: 100%;
+      }
+    }
+
+    .mx-2 {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .top-bar {
+    font-size: 0.8rem;
+    padding: 8px 0;
+
+    .top-icon, .top-icon-lang {
+      font-size: 0.9rem;
+    }
+  }
+}
      

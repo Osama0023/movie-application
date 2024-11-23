@@ -1,9 +1,13 @@
 <div class="store-location-page">
-  <div class="breadcrumb">
-    <nav aria-label="breadcrumb">
+  <div class="breadcrumb-container">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/home">Home</a></li>
-        <li class="breadcrumb-item active">Store Locations</li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/']">Home</a>
+        </li>
+        <li class="breadcrumb-item active">
+          Store Locations
+        </li>
       </ol>
     </nav>
   </div>

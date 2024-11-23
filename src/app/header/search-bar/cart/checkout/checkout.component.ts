@@ -121,7 +121,7 @@ Purchase() {
     address: this.checkoutForm.get('address')?.value,
     email: this.checkoutForm.get('email')?.value,
     name: `${this.checkoutForm.get('firstName')?.value} ${this.checkoutForm.get('lastName')?.value}`,
-    status: 'ordered'
+    // status: ''
   };
 
   this.checkoutService.createOrder(order).subscribe({

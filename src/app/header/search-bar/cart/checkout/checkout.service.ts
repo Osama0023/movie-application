@@ -10,7 +10,7 @@ export class CheckoutService {
 
     constructor(private http: HttpClient){}
 
-    createOrder(order: Order){
+    createOrder(order: any){
         return this.http.post<any>('http://localhost:3000/api/orders',order);
     }
     setOrder(order: any) {
