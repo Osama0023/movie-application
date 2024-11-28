@@ -11,6 +11,8 @@ export class CartComponent implements OnInit{
   cartProduct:any[] = [];
   total:any =0;
   success:boolean = false
+  errorMessage: string = '';
+  showError: boolean = false;
 
   constructor(
     private sharedService: SharedService,
@@ -57,9 +59,25 @@ export class CartComponent implements OnInit{
     }
   }
   addAmount(index: number){
-    this.cartProduct[index].quantity++ ;
-    this.calculateTotal();  
-    localStorage.setItem("cart", JSON.stringify(this.cartProduct))  
+    const item = this.cartProduct[index];
+    const selectedColor = item.selectedColor;
+    
+    // Find the color object from the product's colors array
+    const colorInfo = item.item.colors.find((c: any) => c.colorName === selectedColor);
+    
+    if (!colorInfo) {
+      this.showErrorMessage('Please select a color first');
+      return;
+    }
+
+    if (item.quantity >= colorInfo.quantity) {
+      this.showErrorMessage(`Only ${colorInfo.quantity} items available in ${selectedColor} at Embabi Store`);
+      return;
+    }
+
+    item.quantity++;
+    this.calculateTotal();
+    localStorage.setItem("cart", JSON.stringify(this.cartProduct));
   }
   detectChange(){
     this.calculateTotal();  
@@ -92,5 +110,28 @@ export class CartComponent implements OnInit{
     //   this.success = true
     // })
     console.log(model)
+  }
+
+  updateColor(index: number, color: string) {
+    const item = this.cartProduct[index];
+    const colorInfo = item.item.colors.find((c: any) => c.colorName === color);
+    
+    if (item.quantity > colorInfo.quantity) {
+      item.quantity = colorInfo.quantity;
+      this.showErrorMessage(`Quantity adjusted to ${colorInfo.quantity} (maximum available in ${color})`);
+    }
+    
+    item.selectedColor = color;
+    localStorage.setItem("cart", JSON.stringify(this.cartProduct));
+    this.calculateTotal();
+  }
+
+  private showErrorMessage(message: string) {
+    this.errorMessage = message;
+    this.showError = true;
+    setTimeout(() => {
+      this.showError = false;
+      this.errorMessage = '';
+    }, 3000);
   }
 }
