@@ -17,7 +17,7 @@ export class Product {
 
   export class Sale {
     discountPercentage:number;
-    saleEndDate: Date | string;  // Either a Date object or ISO string
+    saleEndDate: string ;  // Either a Date object or ISO string
   }
   export class Category {
     _id:string;

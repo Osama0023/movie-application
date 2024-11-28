@@ -64,7 +64,7 @@ initForm() {
     productId: new FormControl<string>(''),
     sale: new FormGroup({
       discountPercentage: new FormControl<number | null>(null),
-      saleEndDate: new FormControl<string | Date>(''),
+      saleEndDate: new FormControl< string>(''),
     }),
   });
   this.ProductForm.get('category.categoryId')?.disable(); // Disable categoryId
@@ -112,13 +112,13 @@ removeColor(index: number) {
     const selectedCategory = this.categoryList.find(category => category._id === this.selectedValue);
     
     // Patch the form with both categoryId and categoryName
-    // this.ProductForm.patchValue({
-    //   category: {
-    //     categoryId: this.selectedValue,
-    //     categoryName: selectedCategory ? selectedCategory.name : '' // Set categoryName if found
-    //     },
+    this.ProductForm.patchValue({
+      category: {
+        categoryId: this.selectedValue,
+        categoryName: selectedCategory ? selectedCategory.name : '' // Set categoryName if found
+        },
 
-    // });
+    });
   
     // Fetch products by selected category
     this.productService.getProductsByCategory(this.selectedValue).subscribe((res: Product[]) => {
@@ -266,7 +266,11 @@ removeColor(index: number) {
       }
     });
   }
+  
   msgSave() {
+    console.log('date',typeof this.ProductForm.value.sale.saleEndDate)
+    console.log('datevalue', this.ProductForm.value.sale.saleEndDate)
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You will add this product",
@@ -284,6 +288,8 @@ removeColor(index: number) {
             this.ngOnInit(); // Reload data
           },
           (error) => {
+            console.log('this.ProductForm',this.ProductForm.value)
+
             // Error case
             Swal.fire('Error!', 'There was an error saving the product: ' + error.message, 'error');
           }
@@ -291,25 +297,35 @@ removeColor(index: number) {
       }
     });
   }
-    // msgUpdate() {
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You will update this category",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes, Updated!',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.saveProduct();
-  //       this.ngOnInit();
-  //       Swal.fire('Saved!', 'Your record has been Updated.', 'success');
-  //     } else if (result.isDenied) {
-  //       Swal.fire('Not Updated!', 'error');
-  //     }
-  //   });
-  // }
+    msgUpdate() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You will update this category",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Updated!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('this.SelectedProduct._id',this.SelectedProduct._id)
+        console.log('this.selectedValue',this.selectedValue)
+        console.log('this.ProductForm.value',this.ProductForm.value)
+        this.productService.updateProduct( this.SelectedProduct.category._id,this.SelectedProduct._id, this.ProductForm.value).subscribe(
+          (data) => {
+            // Success case
+            Swal.fire('Saved!', 'Your record has been updated.', 'success');
+            this.ngOnInit(); // Reload data
+          },
+          (error) => {
+            console.log('this.ProductForm',this.ProductForm.value)
+            // Error case
+            Swal.fire('Error!', 'There was an error saving the product: ' + error.message, 'error');
+          }
+        );
+      }
+    });
+  }
   
   deleterow(index: number) {
     this.ProductList.splice(index, 1);

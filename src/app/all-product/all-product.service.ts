@@ -41,6 +41,12 @@ export class ProductService {
          return this.http.delete(`http://localhost:3000/api/products/${productID}/${categoryID}`
          );
      }
+     updateProduct(categoryID:string,productID: string,product:Product){
+        return this.http.put<Product>(`http://localhost:3000/api/products/${categoryID}/${productID}` ,
+            product
+        );
+    }
+
      getProductById(id: string): Observable<Product> {
         return this.http.get<Product>(`http://localhost:3000/api/products/${id}`);
       }

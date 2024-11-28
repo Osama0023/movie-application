@@ -99,7 +99,8 @@ export class ProductDetailsComponent implements OnInit {
     if (this.product && this.selectedColor) {
       const cartItem: CartItem = {
         item: this.product,
-        quantity: this.selectedQuantity
+        quantity: this.selectedQuantity,
+        
       };
       
       const added = this.sharedService.addToCart(cartItem);

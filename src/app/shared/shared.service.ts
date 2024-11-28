@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { CartItem } from '../header/search-bar/cart/cart.model';
 import { WishlistItem } from '../header/search-bar/wishing-list/whiahing-list.model';
@@ -15,7 +16,7 @@ export class SharedService {
   private selectedCategorySource = new BehaviorSubject<string | null>(null);
   selectedCategory$ = this.selectedCategorySource.asObservable();
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.updateCartCountFromLocalStorage(); // Sync cart count on service initialization
     this.updateWishlistCountFromLocalStorage(); // Sync wishlist count on service initialization
   }
@@ -100,7 +101,7 @@ export class SharedService {
 
   // Add item to cart and handle localStorage
   addToCart(item: CartItem): boolean {
-    if (this.isLocalStorageAvailable()) {
+    if (isPlatformBrowser(this.platformId)) {
       let cartItems: CartItem[] = JSON.parse(localStorage.getItem('cart') || '[]');
   
       let exist = cartItems.find(cartItem => cartItem.item._id === item.item._id);

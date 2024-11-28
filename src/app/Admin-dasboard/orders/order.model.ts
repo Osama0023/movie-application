@@ -8,6 +8,10 @@ export interface Order {
   items: Array<{
     product: string;
     quantity: number;
+    colors:[
+      colorName:string,
+      quantity:number
+    ]
   }>;
   createdAt?: Date;
 }
