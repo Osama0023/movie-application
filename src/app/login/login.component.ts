@@ -39,6 +39,7 @@ export class AuthComponent {
       const password = form.value.password;
       const confirmPassword = form.value.confirmPassword;
       this.passwordsMatch = !confirmPassword || password === confirmPassword;
+      console.log('passwordsMatch', this.passwordsMatch);
     }
   }
 
@@ -64,7 +65,7 @@ export class AuthComponent {
     if (this.isLoginMode) {
       authObs = this.authService.login(email, password);
     } else {
-      authObs = this.authService.signUp(email, password, confirmPassword);
+      authObs = this.authService.signUp(email, password);
     }
 
     authObs.subscribe({

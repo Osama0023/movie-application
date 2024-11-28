@@ -20,12 +20,12 @@ export class AuthService {
     this.autoLogin();
   }
 
-  signUp(email: string, password: string, confirmPassword: string) {
+  signUp(email: string, password: string) {
     return this.http
       .post<AuthResponseData>('http://localhost:3000/auth/signup', {
         email,
         password,
-        confirmPassword
+        
       })
       .pipe(
         catchError(this.handleError),
