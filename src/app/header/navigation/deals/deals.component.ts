@@ -37,7 +37,7 @@ export class DealsComponent implements OnInit {
 
   loadDeals(): void {
     this.productService.getAllProducts().subscribe((products: Product[]) => {
-      this.deals = products.filter(product => product.sale);
+      this.deals = products.filter(product => product.sale.discountPercentage>0);
     });
   }
 

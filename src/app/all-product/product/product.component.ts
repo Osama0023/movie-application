@@ -64,4 +64,19 @@ import { Router } from '@angular/router';
       }
       this.item.emit({ item: this.data, quantity: this.quantity });
     }
+
+    isSaleActive(saleEndDate: string): boolean {
+      if (!saleEndDate) return false;
+      const endDate = new Date(saleEndDate);
+      const today = new Date();
+      return endDate >= today;
+    }
+
+    formatDate(date: string): string {
+      if (!date) return '';
+      return new Date(date).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+      });
+    }
   }

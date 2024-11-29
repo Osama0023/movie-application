@@ -115,7 +115,8 @@ Purchase() {
   const order = {
     items: this.cartProduct.map(item => ({
       product: item.item._id,
-      quantity: item.quantity
+      quantity: item.quantity,
+      colors: item.selectedColor
     })),
     totalPrice: this.total,
     address: this.checkoutForm.get('address')?.value,
@@ -123,7 +124,7 @@ Purchase() {
     name: `${this.checkoutForm.get('firstName')?.value} ${this.checkoutForm.get('lastName')?.value}`,
     // status: ''
   };
-
+console.log('ssssss',order)
   this.checkoutService.createOrder(order).subscribe({
     next: (response) => {
       console.log('Order created successfully', response);

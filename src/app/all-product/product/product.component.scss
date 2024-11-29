@@ -213,24 +213,94 @@
   }
 }
 
-.discount-badge {
+.sale-info {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: #e60000;
+  z-index: 2;
+}
+
+.discount-badge-container {
+  position: relative;
+  display: inline-block;
+
+  &:hover {
+    .sale-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+}
+
+.discount-badge {
+  background: linear-gradient(45deg, #e60000, #ff4444);
   color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.3);
+  animation: pulse 2s infinite;
+  cursor: pointer;
+}
+
+.sale-tooltip {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: white;
   padding: 6px 12px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  z-index: 2;
-  box-shadow: 0 2px 8px rgba(230, 0, 0, 0.2);
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  color: #e60000;
+  border: 1px solid rgba(230, 0, 0, 0.2);
+  
+  // Arrow
+  &::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-left: 1px solid rgba(230, 0, 0, 0.2);
+    border-top: 1px solid rgba(230, 0, 0, 0.2);
+  }
+
+  &.expired {
+    color: #666;
+    border-color: rgba(0, 0, 0, 0.1);
+    text-decoration: line-through;
+  }
+
+  .tooltip-icon {
+    margin-right: 4px;
+    font-size: 10px;
+  }
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 // Responsive adjustments
@@ -293,6 +363,28 @@
     .old-price {
       font-size: 12px;
     }
+  }
+
+  .sale-info {
+    flex-direction: row;
+    padding: 3px;
+    gap: 4px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .discount-badge {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .sale-end-date {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  .sale-tooltip {
+    display: none; // Hide tooltip on mobile
   }
 }
 

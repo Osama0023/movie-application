@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SharedService } from '../../../shared/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -13,10 +14,13 @@ export class CartComponent implements OnInit{
   success:boolean = false
   errorMessage: string = '';
   showError: boolean = false;
+  canPurchase: boolean = false;
+  purchaseErrorMessage: string = '';
 
   constructor(
     private sharedService: SharedService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router
   ){}
   ngOnInit(): void {
     this.getCartProducts()
@@ -43,6 +47,7 @@ export class CartComponent implements OnInit{
       (this.cartProduct[x].item.price -((this.cartProduct[x].item.price * this.cartProduct[x].item.sale.discountPercentage / 100 ))) 
        * this.cartProduct[x].quantity 
     }
+    this.canPurchase = this.total > 0;
   }
 
   minsAmount(index: number) {
@@ -133,5 +138,14 @@ export class CartComponent implements OnInit{
       this.showError = false;
       this.errorMessage = '';
     }, 3000);
+  }
+
+  checkout() {
+    if (!this.canPurchase) {
+      this.showErrorMessage('Cannot proceed with empty cart. Please add items to your cart.');
+      return;
+    }
+    // Proceed with checkout
+    this.router.navigate(['/checkout']);
   }
 }

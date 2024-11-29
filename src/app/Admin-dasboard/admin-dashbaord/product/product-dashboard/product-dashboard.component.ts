@@ -182,17 +182,34 @@ removeColor(index: number) {
       valueGetter: (params) => params.data.colors ? params.data.colors.join(', ') : '', // Convert colors array to a comma-separated string
     },
     {
-      headerName: 'Discount Percentage',
-      field: 'sale.discountPercentage', // Accessing discountPercentage from the sale object
+      headerName: 'Discount',
+      field: 'sale.discountPercentage',
       minWidth: 150,
       flex: 1,
+      cellRenderer: (params: any) => {
+        if (!params.data.sale?.discountPercentage) return '';
+        return `<div class="discount-badge">-${params.data.sale.discountPercentage}%</div>`;
+      }
     },
     {
       headerName: 'Sale End Date',
-      field: 'sale.saleEndDate', // Accessing saleEndDate from the sale object
+      field: 'sale.saleEndDate',
       minWidth: 200,
-      flex: 2,
-      valueGetter: (params) => params.data.sale?.saleEndDate ? new Date(params.data.sale.saleEndDate).toLocaleDateString() : '', // Format the date
+      flex: 1,
+      cellRenderer: (params: any) => {
+        if (!params.data.sale?.saleEndDate) return '';
+        const endDate = new Date(params.data.sale.saleEndDate);
+        const today = new Date();
+        const isExpired = endDate < today;
+        
+        return `<div class="sale-date ${isExpired ? 'expired' : 'active'}">
+                  ${endDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                  })}
+                </div>`;
+      }
     },
   ];
   

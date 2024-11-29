@@ -115,8 +115,16 @@
         <span>{{total}} L.E</span>
       </div>
     </div>
-    <button class="checkout-btn" routerLink="/checkout">
-      Proceed to Checkout <i class="fas fa-arrow-right"></i>
+    <button class="checkout-btn" 
+            [disabled]="!canPurchase"
+            [class.disabled]="!canPurchase"
+            (click)="checkout()">
+      <ng-container *ngIf="canPurchase">
+        Proceed to Checkout <i class="fas fa-arrow-right"></i>
+      </ng-container>
+      <ng-container *ngIf="!canPurchase">
+        Cart is Empty
+      </ng-container>
     </button>
   </div>
 </div>

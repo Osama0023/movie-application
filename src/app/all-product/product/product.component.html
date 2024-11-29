@@ -1,6 +1,14 @@
       <div class="product-card">
-        <div class="discount-badge" *ngIf="data.sale?.discountPercentage">
-          -{{ data.sale?.discountPercentage }}%
+        <div class="sale-info" *ngIf="data.sale?.discountPercentage">
+          <div class="discount-badge-container">
+            <div class="discount-badge">
+              -{{ data.sale?.discountPercentage }}%
+            </div>
+            <div class="sale-tooltip" *ngIf="data.sale?.saleEndDate" [class.expired]="!isSaleActive(data.sale.saleEndDate)">
+              <span class="tooltip-icon">⏰</span>
+              Ends {{ formatDate(data.sale.saleEndDate) }}
+            </div>
+          </div>
         </div>
 
         <div class="image-container">

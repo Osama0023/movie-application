@@ -1,1 +1,36 @@
+:host ::ng-deep {
+  .discount-badge {
+    background-color: #ff4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+  }
 
+  .sale-date {
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 500;
+    
+    &.active {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+    }
+    
+    &.expired {
+      background-color: #ffebee;
+      color: #c62828;
+      border: 1px solid #ef9a9a;
+      text-decoration: line-through;
+    }
+  }
+
+  .ag-cell {
+    display: flex;
+    align-items: center;
+  }
+}

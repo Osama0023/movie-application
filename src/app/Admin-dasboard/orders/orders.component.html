@@ -47,8 +47,18 @@
         <h4>Order Items</h4>
         <div class="items-grid">
           <div class="item" *ngFor="let item of order.items">
-            <span class="quantity">{{ item.quantity }}x</span>
-            <span class="product-id">{{ item.product }}</span>
+            <div class="item-details">
+              <span class="quantity">{{ item.quantity }}x</span>
+              <span class="product-name">{{ item.product.name }}</span>
+              <span class="product-price">{{ item.product.price | currency:'EGP ' }}</span>
+            </div>
+            
+            <!-- Display colors -->
+            <div class="colors-list">
+              <div class="color-item">
+                <span class="color-name">{{ item.colors }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

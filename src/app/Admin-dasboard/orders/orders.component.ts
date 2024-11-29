@@ -11,7 +11,7 @@ export class OrdersComponent implements OnInit {
   orders: Order[] = [];
   filteredOrders: Order[] = [];
   currentStatus: string = 'all';
-  orderStatuses = ['ordered', 'prepared', 'shipped', 'delivered'];
+  orderStatuses = ['pending','ordered', 'prepared', 'shipped', 'delivered'];
 
   constructor(private http: HttpClient) {}
 
