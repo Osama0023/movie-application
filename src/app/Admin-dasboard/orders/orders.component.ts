@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Order } from './order.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-orders',
@@ -52,17 +53,50 @@ export class OrdersComponent implements OnInit {
   }
 
   updateOrderStatus(order: Order, newStatus: string): void {
-    this.http.put(`http://localhost:3000/api/orders/${order._id}`, { 
-      status: newStatus 
-    }).subscribe({
-      next: () => {
-        order.status = newStatus;
-        // Refresh the filtered orders
-        this.filterByStatus(this.currentStatus);
-      },
-      error: (error) => {
-        console.error('Error updating order status:', error);
-        // Implement error handling UI feedback here
+    Swal.fire({
+      title: 'Update Order Status',
+      text: `Are you sure you want to change the order status to "${newStatus}"?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, update it!',
+      cancelButtonText: 'No, cancel',
+      confirmButtonColor: '#3b82f6',
+      cancelButtonColor: '#ef4444',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('order._id',order._id);
+        console.log('newStatus',newStatus);
+        console.log('orderstatus',order.status);
+        this.http.patch(`http://localhost:3000/api/orders/${order._id}/status`, { 
+          status: newStatus 
+        }).subscribe({
+          next: () => {
+            order.status = newStatus;
+
+            this.filterByStatus(this.currentStatus);
+            Swal.fire({
+              title: 'Updated!',
+              text: 'Order status has been updated successfully.',
+              icon: 'success',
+              timer: 2000,
+              showConfirmButton: false
+            });
+          },
+          error: (error) => {
+            console.error('Error updating order status:', error);
+            Swal.fire({
+              title: 'Error!',
+              text: 'Failed to update order status.',
+              icon: 'error',
+              confirmButtonColor: '#3b82f6'
+            });
+          }
+        });
+      } else {
+        const selectElement = document.querySelector(`select[data-order-id="${order._id}"]`) as HTMLSelectElement;
+        if (selectElement) {
+          selectElement.value = order.status;
+        }
       }
     });
   }

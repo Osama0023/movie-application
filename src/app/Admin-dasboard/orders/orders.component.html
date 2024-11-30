@@ -73,7 +73,8 @@
           <select 
             [ngModel]="order.status" 
             (ngModelChange)="updateOrderStatus(order, $event)"
-            [class]="'status-' + order.status">
+            [class]="'status-' + order.status"
+            [attr.data-order-id]="order._id">
             <option *ngFor="let status of orderStatuses" [value]="status">
               {{ status | titlecase }}
             </option>
