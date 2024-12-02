@@ -78,6 +78,10 @@ export class AuthComponent {
           this.router.navigate(['home']);
         }
         this.isLoading = false;
+
+        const redirectUrl = this.authService.getRedirectUrl() || '/';
+        this.authService.clearRedirectUrl();
+        this.router.navigate([redirectUrl]);
       },
       error: errorMessage => {
         console.log(errorMessage);

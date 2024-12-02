@@ -27,18 +27,27 @@
               <div class="product-info">
                 <h3 class="product-name">{{item.item.name}}</h3>
                 <p class="category">{{item.item.category?.name}}</p>
-                <div class="color-selector">
+                <div class="color-selector" [class.needs-color]="item.needsColor">
                   <label>Color:</label>
-                  <div class="color-options">
-                    <button 
-                      *ngFor="let color of item.item.colors"
-                      [class.selected]="item.selectedColor === color.colorName"
-                      (click)="updateColor(index, color.colorName)"
-                      class="color-option"
-                      [style.backgroundColor]="color.colorName"
-                      [attr.title]="color.colorName">
-                    </button>
+                  <div class="color-selection-container">
+                    <div class="color-options">
+                      <button 
+                        *ngFor="let color of item.item.colors"
+                        [class.selected]="item.selectedColor === color.colorName"
+                        (click)="updateColor(index, color.colorName)"
+                        class="color-option"
+                        [style.backgroundColor]="color.colorName"
+                        [attr.title]="color.colorName">
+                      </button>
+                    </div>
+                    <div class="selected-color-info" *ngIf="item.selectedColor">
+                      <span class="selected-color-dot" [style.backgroundColor]="item.selectedColor"></span>
+                      <span class="selected-color-name">{{item.selectedColor}}</span>
+                    </div>
                   </div>
+                  <span class="color-warning" *ngIf="item.needsColor">
+                    Please select a color
+                  </span>
                 </div>
               </div>
             </td>
@@ -109,6 +118,10 @@
       <div class="summary-row">
         <span>Shipping</span>
         <span>Free</span>
+      </div>
+      <div class="summary-row savings" *ngIf="savings > 0">
+        <span>Your Savings</span>
+        <span>{{savings}} L.E</span>
       </div>
       <div class="summary-row total">
         <span>Total</span>

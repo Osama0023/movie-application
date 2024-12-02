@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SharedService } from '../../../shared/shared.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../login/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +21,8 @@ export class CartComponent implements OnInit{
   constructor(
     private sharedService: SharedService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ){}
   ngOnInit(): void {
     this.getCartProducts()
@@ -121,14 +123,25 @@ export class CartComponent implements OnInit{
     const item = this.cartProduct[index];
     const colorInfo = item.item.colors.find((c: any) => c.colorName === color);
     
+    if (!colorInfo || colorInfo.quantity === 0) {
+      this.showErrorMessage(`${color} is out of stock. Please select a different color.`);
+      return;
+    }
+
     if (item.quantity > colorInfo.quantity) {
       item.quantity = colorInfo.quantity;
       this.showErrorMessage(`Quantity adjusted to ${colorInfo.quantity} (maximum available in ${color})`);
     }
     
     item.selectedColor = color;
+    item.needsColor = false;
     localStorage.setItem("cart", JSON.stringify(this.cartProduct));
     this.calculateTotal();
+
+    if (this.errorMessage.includes('select a color')) {
+      this.showError = false;
+      this.errorMessage = '';
+    }
   }
 
   private showErrorMessage(message: string) {
@@ -145,7 +158,52 @@ export class CartComponent implements OnInit{
       this.showErrorMessage('Cannot proceed with empty cart. Please add items to your cart.');
       return;
     }
-    // Proceed with checkout
+
+    // Check if all items have selected colors
+    const itemsWithoutColor = this.cartProduct.filter(item => !item.selectedColor);
+    if (itemsWithoutColor.length > 0) {
+      this.showErrorMessage('Please select a color for all items before checkout');
+      
+      itemsWithoutColor.forEach(item => {
+        const index = this.cartProduct.indexOf(item);
+        if (index >= 0) {
+          this.cartProduct[index].needsColor = true;
+        }
+      });
+      return;
+    }
+
+    // Check if any selected color has zero quantity
+    const itemsWithZeroQuantity = this.cartProduct.filter(item => {
+      const selectedColorInfo = item.item.colors.find((c: any) => c.colorName === item.selectedColor);
+      return selectedColorInfo && selectedColorInfo.quantity === 0;
+    });
+
+    if (itemsWithZeroQuantity.length > 0) {
+      this.showErrorMessage('Some selected colors are out of stock. Please choose a different color.');
+      
+      itemsWithZeroQuantity.forEach(item => {
+        const index = this.cartProduct.indexOf(item);
+        if (index >= 0) {
+          this.cartProduct[index].needsColor = true;
+        }
+      });
+      return;
+    }
+
+    // Check if user is logged in
+    if (!this.authService.isAuthenticated()) {
+      // Store the intended destination
+      this.authService.setRedirectUrl('/checkout');
+      
+      // Show message and redirect to login
+      setTimeout(() => {
+        this.router.navigate(['/login']);
+      }, 0);
+      return;
+    }
+
+    // If all validations pass and user is logged in, proceed to checkout
     this.router.navigate(['/checkout']);
   }
 }
