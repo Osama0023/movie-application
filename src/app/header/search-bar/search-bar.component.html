@@ -31,8 +31,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link icon-link" routerLink="/login">
-          <i class="fas fa-user"></i> Login
+        <a class="nav-link icon-link" (click)="onUserIconClick()">
+          <i class="fas fa-user"></i>
+          {{ isLoggedIn ? 'My Account' : 'Login' }}
         </a>
       </li>
     </ul>

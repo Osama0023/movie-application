@@ -17,6 +17,7 @@ import { NewArrivalComponent } from "./header/navigation/new-arrival/new-arrival
 import { CheckoutComponent } from "./header/search-bar/cart/checkout/checkout.component";
 import { CompleteOrderComponent } from "./header/search-bar/cart/complete-order/complete-order.component";
 import { StoreLocationComponent } from "./header/search-bar/cart/store-location/store-location.component";
+import { MyAccountPageComponent } from "./header/search-bar/my-account-page/my-account-page.component";
 
 const route : Routes = [
   {path: '', redirectTo:'home', pathMatch:'full'},
@@ -39,6 +40,10 @@ const route : Routes = [
     path: 'product/:id',
     component: ProductDetailsComponent,
     data: { breadcrumb: 'Product Details' }
+  },
+  {
+    path: 'my-account',
+    component: MyAccountPageComponent,
   },
   // { path: 'product-details', component: ProductDetailsComponent }, // Route to product details page
   {path:'**', component: AuthComponent},

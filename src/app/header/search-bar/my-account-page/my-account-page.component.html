@@ -1,1 +1,80 @@
-<p>my-account-page works!</p>
+<div class="account-container">
+  <div class="account-header">
+    <div class="user-info">
+      <h1>My Account</h1>
+      <div class="email">
+        <i class="fas fa-envelope"></i>
+        <span>{{userEmail}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="orders-section">
+    <h2>Order History</h2>
+    
+    <div class="loading" *ngIf="isLoading">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span>Loading your orders...</span>
+    </div>
+
+    <div class="error" *ngIf="error">
+      <i class="fas fa-exclamation-circle"></i>
+      <span>{{error}}</span>
+    </div>
+
+    <div class="orders-list" *ngIf="!isLoading && !error">
+      <div class="no-orders" *ngIf="orders.length === 0">
+        <i class="fas fa-shopping-bag"></i>
+        <p>You haven't placed any orders yet.</p>
+        <button routerLink="/shop" class="shop-btn">Start Shopping</button>
+      </div>
+
+      <div class="order-card" *ngFor="let order of orders">
+        <div class="order-header">
+          <div class="order-info">
+            <span class="order-id">Order #{{order.orderId}}</span>
+            <span class="order-date">{{order.createdAt | date:'medium'}}</span>
+          </div>
+          <span class="status" [ngClass]="order.status.toLowerCase()">
+            {{order.status}}
+          </span>
+        </div>
+        
+        <div class="shipping-info">
+          <div class="info-item">
+            <i class="fas fa-user"></i>
+            <span>{{order.name}}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{order.address}}</span>
+          </div>
+          <div class="info-item">
+            <i class="fas fa-envelope"></i>
+            <span>{{order.email}}</span>
+          </div>
+        </div>
+
+        <div class="order-items">
+          <div class="item" *ngFor="let item of order.items">
+            <div class="item-info">
+              <span class="item-name">{{item.product.name}}</span>
+              <span class="item-color">Color: {{item.colors}}</span>
+              <span class="item-sale" *ngIf="item.product.sale.discountPercentage > 0">
+                {{item.product.sale.discountPercentage}}% OFF
+              </span>
+            </div>
+            <div class="item-details">
+              <span class="quantity">x{{item.quantity}}</span>
+              <span class="price">${{item.product.price}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-footer">
+          <span class="total">Total Amount: ${{order.totalPrice}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
