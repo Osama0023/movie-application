@@ -99,4 +99,56 @@
     }
   }
 }
+
+.logout-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ecf0f1 !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-weight: 500;
+    
+    i {
+        font-size: 1rem;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        
+        i {
+            transform: translateX(3px);
+        }
+
+       
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+@media (max-width: 768px) {
+    .logout-link {
+        padding: 3px 10px;
+        font-size: 0.9rem;
+
+        i {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .logout-link {
+        padding: 2px 8px;
+        font-size: 0.8rem;
+
+        i {
+            font-size: 0.8rem;
+        }
+    }
+}
      

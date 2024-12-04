@@ -38,12 +38,15 @@ export class CheckoutComponent implements OnInit {
       Validators.minLength(2),
       Validators.pattern('^[a-zA-Z ]*$')
     ]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[0-9]{11}$')
+    ]),
     address: new FormControl('', [
       Validators.required,
       Validators.minLength(10)
     ]),
     city: new FormControl('', Validators.required),
-    secNumber: new FormControl(''),
     country: new FormControl('Egypt'),
     email: new FormControl('', [
       Validators.required,
@@ -69,6 +72,7 @@ export class CheckoutComponent implements OnInit {
           case 'email': return 'Please enter a valid email address';
           case 'firstName':
           case 'lastName': return 'Only letters are allowed';
+          case 'phone': return 'Please enter a valid 11-digit phone number';
           default: return 'Invalid format';
         }
       }

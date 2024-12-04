@@ -1,25 +1,16 @@
-<div class="notification-box" *ngIf="showNotification" @fadeInOut>
-    Item is already in the cart!
+<div class="deals-container">
+  <!-- Notification -->
+  <div class="notification-box" *ngIf="showNotification" @fadeInOut>
+    {{ notificationMessage }}
   </div>
-  
-  <div class="breadcrumb-container">
-    <nav aria-label="breadcrumb" class="breadcrumb-nav">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a [routerLink]="['/']">Home</a>
-        </li>
-        <li class="breadcrumb-item active">
-          Hot Deals
-        </li>
-      </ol>
-    </nav>
+
+  <!-- Products Grid -->
+  <div class="products-grid">
+    <app-product 
+      *ngFor="let product of deals" 
+      [data]="product"
+      (item)="addToCart($event.item)">
+    </app-product>
   </div>
-  
-  <div class="container">
-    <div class="row">
-      <div *ngFor="let product of deals" class="col-md-3">
-        <app-product [data]="product" (item)="addToCart($event)" (productSelected)="navigateToProductDetails($event)"></app-product>
-      </div>
-    </div>
-  </div>
+</div>
   

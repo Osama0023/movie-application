@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../../all-product/all-product.service';
 import { Product } from '../../../all-product/all-product.module';
 import { SharedService } from '../../../shared/shared.service';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CartItem } from '../../search-bar/cart/cart.model';
 
 @Component({
   selector: 'app-deals',
@@ -24,6 +25,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class DealsComponent implements OnInit {
   deals: Product[] = [];
   showNotification: boolean = false;
+  notificationMessage: string = '';
 
   constructor(
     private productService: ProductService,
@@ -37,18 +39,45 @@ export class DealsComponent implements OnInit {
 
   loadDeals(): void {
     this.productService.getAllProducts().subscribe((products: Product[]) => {
-      this.deals = products.filter(product => product.sale.discountPercentage>0);
+      this.deals = products.filter(product => product.sale.discountPercentage > 0);
     });
   }
 
   addToCart(product: Product): void {
-    const added = this.sharedService.addToCart({ item: product, quantity: 1 });
-    if (!added) {
-      this.showNotification = true;
-      setTimeout(() => {
-        this.showNotification = false;
-      }, 2000);
+    // Check if product is already in cart
+    const cartData = localStorage.getItem('cart');
+    const cartItems: CartItem[] = cartData ? JSON.parse(cartData) : [];
+    
+    const existingCartItem = cartItems.find(item => item.item._id === product._id);
+    
+    if (existingCartItem) {
+      this.showNotificationMessage(' Item is already in the cart!');
+      return;
     }
+
+    // Create new cart item
+    const cartItem: CartItem = {
+      item: product,
+      quantity: 1
+    };
+
+    // Add to cart
+    cartItems.push(cartItem);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    
+    // Update cart count
+    this.sharedService.updateCartCountFromLocalStorage();
+    
+    this.showNotificationMessage('Item added to cart successfully');
+  }
+
+  private showNotificationMessage(message: string): void {
+    this.notificationMessage = message;
+    this.showNotification = true;
+    setTimeout(() => {
+      this.showNotification = false;
+      this.notificationMessage = '';
+    }, 2000);
   }
 
   navigateToProductDetails(productId: string): void {

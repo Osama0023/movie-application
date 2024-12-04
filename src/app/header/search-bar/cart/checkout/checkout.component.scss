@@ -333,3 +333,124 @@ body {
       margin-top: 24px;
     }
   }
+  
+  .payment-methods-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+  
+    .payment-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      padding: 0.5rem;
+    }
+  
+    .payment-method {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem;
+      border: 2px solid #e1e1e1;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+  
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-color: #3498db;
+      }
+  
+      i {
+        font-size: 2rem;
+  
+        &.fa-money-bill-wave {
+          color: #27ae60;
+        }
+  
+        &.fa-cc-visa {
+          color: #192a56;
+        }
+      }
+  
+      .payment-icon {
+        width: 48px;
+        height: 48px;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+  
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+  
+      .method-name {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #2c3e50;
+        text-align: center;
+      }
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 992px) {
+    .payment-methods-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .payment-methods-section {
+      padding: 1rem;
+  
+      .payment-methods-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+  
+      .payment-method {
+        padding: 1rem;
+  
+        i {
+          font-size: 1.75rem;
+        }
+  
+        .payment-icon {
+          width: 40px;
+          height: 40px;
+        }
+  
+        .method-name {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .payment-methods-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 0.75rem !important;
+    }
+  
+    .payment-method {
+      padding: 0.75rem !important;
+  
+      .payment-icon {
+        width: 36px !important;
+        height: 36px !important;
+      }
+    }
+  }
