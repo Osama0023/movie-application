@@ -51,7 +51,7 @@ export class AuthComponent {
     const email = form.value.email;
     const password = form.value.password;
     const confirmPassword = form.value.confirmPassword;
-    console.log('fffffffffffff',email ,password, confirmPassword);
+    
     if (!this.isLoginMode) {
       if (password !== confirmPassword) {
         this.error = 'Passwords must match';
@@ -70,18 +70,21 @@ export class AuthComponent {
 
     authObs.subscribe({
       next: (resData: AuthResponseData) => {
+        this.authService.storeUserEmail(email);
+        
         const deccodedToken = this.helper.decodeToken(resData.token);
         this.isAdmin = deccodedToken.role;
-        if (this.isAdmin == 'admin') {
-          this.router.navigate(['admin-dashboard']);
-        } else {
-          this.router.navigate(['home']);
-        }
+        console.log('isAdmin', this.isAdmin);
+        
         this.isLoading = false;
 
-        const redirectUrl = this.authService.getRedirectUrl() || '/';
-        this.authService.clearRedirectUrl();
-        this.router.navigate([redirectUrl]);
+        if (this.isAdmin === 'admin') {
+          this.router.navigate(['/admin-dashboard']);
+        } else {
+          const redirectUrl = this.authService.getRedirectUrl() || '/home';
+          this.authService.clearRedirectUrl();
+          this.router.navigate([redirectUrl]);
+        }
       },
       error: errorMessage => {
         console.log(errorMessage);

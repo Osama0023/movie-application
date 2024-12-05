@@ -4,6 +4,7 @@ import { CartItem } from '../cart.model';
 import { CheckoutService } from './checkout.service';
 import { Router } from '@angular/router';
 import { SharedService } from '../../../../shared/shared.service';
+import { AuthService } from '../../../../login/auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -17,14 +18,53 @@ export class CheckoutComponent implements OnInit {
   cartProduct: CartItem[] = [];
   submitted = false;
 
+  egyptianCities: string[] = [
+    'القاهرة',
+    'الجيزة',
+    'الأسكندرية',
+    'الدقهلية',
+    'الشرقية',
+    'المنوفية',
+    'القليوبية',
+    'الپحيرة',
+    'الغربية',
+    'بور سعيد',
+    'دمياط',
+    'الإسماعيلية',
+    'السويس',
+    'كفر الشيخ',
+    'الفيوم',
+    'بني سويف',
+    'مطروح',
+    'شمال سيناء',
+    'جنوب سيناء',
+    'المنيا',
+    'أسيوط',
+    'سوهاج',
+    'قنا',
+    'البحر الأحمر',
+    'الأقصر',
+    'أسوان',
+    'الواحات',
+    'الوادي الجديد'
+  ];
+
   constructor(
     private checkoutService: CheckoutService, 
     private router: Router,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.getCartProducts();
+    const userEmail = this.authService.getUserEmail();
+    if (userEmail) {
+      this.checkoutForm.patchValue({
+        email: userEmail
+      });
+      this.checkoutForm.get('email').disable();
+    }
   }
 
   checkoutForm = new FormGroup({

@@ -182,4 +182,12 @@ export class AuthService {
     // For example, check if there's a valid token in localStorage
     return !!localStorage.getItem('token');
   }
+
+  storeUserEmail(email: string) {
+    localStorage.setItem('userEmail', email);
+  }
+
+  getUserEmail(): string {
+    return localStorage.getItem('userEmail');
+  }
 }
