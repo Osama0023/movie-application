@@ -127,7 +127,7 @@
         </div>
         <div class="summary-item">
           <span>Shipping</span>
-          <span class="free">Free</span>
+          <span>{{shippingCost | currency:'EGP '}}</span>
         </div>
         <div class="summary-item savings">
           <span>Your Savings</span>
@@ -135,7 +135,7 @@
         </div>
         <div class="summary-total">
           <span>Total</span>
-          <span>{{total | currency:'EGP '}}</span>
+          <span>{{calculateFinalTotal() | currency:'EGP '}}</span>
         </div>
       </div>
       <button 

@@ -23,6 +23,7 @@ export class OrdersComponent implements OnInit {
   getOrders(): void {
     this.http.get<any>('http://localhost:3000/api/orders/all')
       .subscribe(response => {
+        console.log('response',response)
         this.orders = Array.isArray(response.data) ? response.data : [];
         this.filterByStatus('all');
       });

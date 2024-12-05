@@ -15,6 +15,7 @@ export class CheckoutComponent implements OnInit {
   total: number = 0;
   items: number = 0;
   savings: number = 0;
+  shippingCost: number = 0;  // Default shipping cost
   cartProduct: CartItem[] = [];
   submitted = false;
 
@@ -65,6 +66,26 @@ export class CheckoutComponent implements OnInit {
       });
       this.checkoutForm.get('email').disable();
     }
+
+    // Subscribe to city changes
+    this.checkoutForm.get('city').valueChanges.subscribe(city => {
+      this.updateShippingCost(city);
+    });
+  }
+
+  private updateShippingCost(city: string) {
+    this.shippingCost = city === 'القاهرة' ? 150 : 250;
+    this.calculateFinalTotal();
+  }
+
+  public calculateFinalTotal() {
+    // Calculate total with shipping
+    const finalTotal = this.total + this.shippingCost;
+    
+    // Store the updated total in localStorage
+    localStorage.setItem('orderTotal', finalTotal.toString());
+    
+    return finalTotal;
   }
 
   checkoutForm = new FormGroup({
@@ -162,8 +183,9 @@ Purchase() {
       quantity: item.quantity,
       colors: item.selectedColor
     })),
-    totalPrice: this.total,
-    address: this.checkoutForm.get('address')?.value,
+    totalPrice: this.calculateFinalTotal(), // Include shipping in total
+    // shippingCost: this.shippingCost,
+    address: this.checkoutForm.get('address')?.value +' , '+ this.checkoutForm.get('city')?.value,
     email: this.checkoutForm.get('email')?.value,
     name: `${this.checkoutForm.get('firstName')?.value} ${this.checkoutForm.get('lastName')?.value}`,
     // status: ''

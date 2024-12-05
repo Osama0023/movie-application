@@ -283,6 +283,20 @@ body {
           color: #059669;
           font-weight: 500;
         }
+  
+        &.shipping {
+          .shipping-cost {
+            font-weight: 500;
+            
+            &.cairo {
+              color: #10b981; // Green color for Cairo shipping
+            }
+            
+            &.other {
+              color: #3b82f6; // Blue color for other cities
+            }
+          }
+        }
       }
   
       .summary-total {
