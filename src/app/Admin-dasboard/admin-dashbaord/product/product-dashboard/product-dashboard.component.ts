@@ -179,7 +179,12 @@ removeColor(index: number) {
       field: 'colors',
       minWidth: 200,
       flex: 2,
-      valueGetter: (params) => params.data.colors ? params.data.colors.join(', ') : '', // Convert colors array to a comma-separated string
+      valueGetter: (params) => {
+        if (!params.data.colors) return '';
+        return params.data.colors.map((color: any) => 
+          `${color.colorName}: ${color.quantity}`
+        ).join(', ');
+      }
     },
     {
       headerName: 'Discount',
@@ -237,7 +242,25 @@ removeColor(index: number) {
       if (event.column.getColId() === 'edit') {
         this.SelectedProduct = event.data;
   
-        // Patch the form with the product's data including categoryId, categoryName, sale, etc.
+        // Clear existing color controls
+        while (this.colors.length) {
+          this.colors.removeAt(0);
+        }
+  
+        // Add color controls for each existing color
+        if (this.SelectedProduct.colors && this.SelectedProduct.colors.length) {
+          this.SelectedProduct.colors.forEach((color: any) => {
+            this.colors.push(new FormGroup({
+              colorName: new FormControl(color.colorName),
+              quantity: new FormControl(color.quantity)
+            }));
+          });
+        } else {
+          // Add one empty color group if no colors exist
+          this.colors.push(this.createColorGroup());
+        }
+  
+        // Patch the rest of the form
         this.ProductForm.patchValue({
           name: this.SelectedProduct.name,
           price: this.SelectedProduct.price,
@@ -247,13 +270,13 @@ removeColor(index: number) {
             categoryName: this.SelectedProduct.category?.name || null,
           },
           productId: this.SelectedProduct._id,
-          colors: this.SelectedProduct.colors || [],
           sale: {
             discountPercentage: this.SelectedProduct.sale?.discountPercentage || null,
-            saleEndDate: this.SelectedProduct.sale?.saleEndDate || null,
+            saleEndDate: this.SelectedProduct.sale?.saleEndDate ? 
+              new Date(this.SelectedProduct.sale.saleEndDate).toISOString().split('T')[0] : null,
           },
         });
-        console.log('this.ProductForm',this.ProductForm.value)
+  
         this.rowindex = Number(event.rowIndex);
       }
     },
@@ -285,8 +308,16 @@ removeColor(index: number) {
   }
   
   msgSave() {
-    console.log('date',typeof this.ProductForm.value.sale.saleEndDate)
-    console.log('datevalue', this.ProductForm.value.sale.saleEndDate)
+    // Format the form data before sending
+    const formData = {
+      ...this.ProductForm.value,
+      colors: this.colors.value, // This will now properly include colorName and quantity
+      sale: {
+        ...this.ProductForm.value.sale,
+        saleEndDate: this.ProductForm.value.sale.saleEndDate ? 
+          new Date(this.ProductForm.value.sale.saleEndDate).toISOString() : null
+      }
+    };
 
     Swal.fire({
       title: 'Are you sure?',
@@ -298,16 +329,12 @@ removeColor(index: number) {
       confirmButtonText: 'Yes, Save it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productService.save(this.selectedValue, this.ProductForm.value).subscribe(
+        this.productService.save(this.selectedValue, formData).subscribe(
           (data) => {
-            // Success case
             Swal.fire('Saved!', 'Your record has been saved.', 'success');
-            this.ngOnInit(); // Reload data
+            this.ngOnInit();
           },
           (error) => {
-            console.log('this.ProductForm',this.ProductForm.value)
-
-            // Error case
             Swal.fire('Error!', 'There was an error saving the product: ' + error.message, 'error');
           }
         );

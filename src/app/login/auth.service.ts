@@ -181,7 +181,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     // Implement your authentication check here
     // For example, check if there's a valid token in localStorage
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('userData');
   }
 
   storeUserEmail(email: string) {
